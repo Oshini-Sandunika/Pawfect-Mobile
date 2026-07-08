@@ -3,18 +3,16 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="#FAF7F2">
+    android:background="#FAF7F2"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Top Mobile Header -->
-        <!-- Top Mobile Header -->
+        <!-- Top Header -->
         <LinearLayout
-            android:id="@+id/topHeader"
             android:layout_width="match_parent"
             android:layout_height="94dp"
             android:background="#FFFFFF"
@@ -27,7 +25,6 @@
             android:paddingBottom="8dp">
 
             <ImageView
-                android:id="@+id/imgLogo"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:contentDescription="Pawfect Logo"
@@ -46,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:text="Pawfect"
                     android:textColor="#5B3A2E"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -55,14 +52,8 @@
                     android:text="Where paws meet their perfect match"
                     android:textColor="#8A746A"
                     android:textSize="10sp" />
-            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="☰"
-                android:textColor="#5B3A2E"
-                android:textSize="28sp" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -74,15 +65,15 @@
             android:gravity="center"
             android:orientation="vertical"
             android:paddingStart="24dp"
-            android:paddingTop="36dp"
+            android:paddingTop="42dp"
             android:paddingEnd="24dp"
             android:paddingBottom="42dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Pet Ownership Tools"
+                android:text="Welcome to Pawfect"
                 android:textColor="#4E342E"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -92,27 +83,28 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
                 android:gravity="center"
-                android:lineSpacingExtra="4dp"
-                android:text="Planning for a new pet? Use our calculators and converters to get ready for your new family member."
+                android:lineSpacingExtra="5dp"
+                android:text="Find the right pet for your lifestyle and plan your pet care costs easily."
                 android:textColor="#5F5F66"
                 android:textSize="16sp" />
+
         </LinearLayout>
 
-        <!-- Cards Container -->
+        <!-- Main Buttons Section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="20dp">
 
-            <!-- Adoption Cost Estimator Card -->
+            <!-- Pet Recommendation Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="22dp"
-                card_view:cardCornerRadius="12dp"
-                card_view:cardElevation="5dp"
-                card_view:cardBackgroundColor="#FFFFFF">
+                card_view:cardBackgroundColor="#FFFFFF"
+                card_view:cardCornerRadius="14dp"
+                card_view:cardElevation="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -124,52 +116,52 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="💰"
-                        android:textSize="42sp" />
+                        android:text="🐾"
+                        android:textSize="46sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="18dp"
                         android:gravity="center"
-                        android:text="Adoption Cost Estimator"
+                        android:text="Find Your Perfect Pet"
                         android:textColor="#3E2723"
-                        android:textSize="21sp"
+                        android:textSize="22sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="12dp"
                         android:gravity="center"
                         android:lineSpacingExtra="4dp"
-                        android:text="Calculate the initial costs of adopting a pet, including vaccinations, supplies, and fees."
-                        android:textColor="#3F2A24"
+                        android:text="Answer a short questionnaire and get a pet category recommendation based on your lifestyle."
+                        android:textColor="#4E342E"
                         android:textSize="15sp" />
 
                     <Button
-                        android:id="@+id/btnAdoptionCost"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
+                        android:id="@+id/btnPetRecommendation"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
                         android:layout_marginTop="24dp"
                         android:background="@drawable/brown_rounded_button"
-                        android:minWidth="170dp"
-                        android:text="Launch Calculator"
+                        android:text="Start Pet Recommendation"
                         android:backgroundTint="@null"
                         android:textAllCaps="false"
                         android:textColor="#FFFFFF"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Monthly Care Budget Card -->
+            <!-- Tools Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="22dp"
-                card_view:cardCornerRadius="12dp"
-                card_view:cardElevation="5dp"
-                card_view:cardBackgroundColor="#FFFFFF">
+                card_view:cardBackgroundColor="#FFFFFF"
+                card_view:cardCornerRadius="14dp"
+                card_view:cardElevation="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -182,96 +174,41 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="🧮"
-                        android:textSize="42sp" />
+                        android:textSize="46sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="18dp"
                         android:gravity="center"
-                        android:text="Monthly Care Budget"
+                        android:text="Pet Ownership Tools"
                         android:textColor="#3E2723"
-                        android:textSize="21sp"
+                        android:textSize="22sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="12dp"
                         android:gravity="center"
                         android:lineSpacingExtra="4dp"
-                        android:text="Estimate the ongoing monthly expenses for food, grooming, vet care, and other needs."
-                        android:textColor="#3F2A24"
+                        android:text="Use calculators and converters to estimate adoption cost, monthly care budget, and pet age."
+                        android:textColor="#4E342E"
                         android:textSize="15sp" />
 
                     <Button
-                        android:id="@+id/btnMonthlyBudget"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="24dp"
-                        android:background="@drawable/brown_rounded_button"
-                        android:backgroundTint="@null"
-                        android:minWidth="170dp"
-                        android:text="Calculate Budget"
-                        android:textAllCaps="false"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Human Year Converter Card -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                card_view:cardCornerRadius="12dp"
-                card_view:cardElevation="5dp"
-                card_view:cardBackgroundColor="#FFFFFF">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="28dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="⏳"
-                        android:textSize="42sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:gravity="center"
-                        android:text="Human Year Converter"
-                        android:textColor="#3E2723"
-                        android:textSize="21sp"
-                        android:textStyle="bold" />
-
-                    <TextView
+                        android:id="@+id/btnTools"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:gravity="center"
-                        android:lineSpacingExtra="4dp"
-                        android:text="Wondering how old your dog or cat is in human years? Find out here."
-                        android:textColor="#3F2A24"
-                        android:textSize="15sp" />
-
-                    <Button
-                        android:id="@+id/btnHumanYear"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
+                        android:layout_height="52dp"
                         android:layout_marginTop="24dp"
                         android:background="@drawable/brown_rounded_button"
-                        android:minWidth="170dp"
-                        android:text="Convert Age"
+                        android:text="Open Tools"
                         android:backgroundTint="@null"
                         android:textAllCaps="false"
                         android:textColor="#FFFFFF"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

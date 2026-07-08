@@ -91,6 +91,7 @@ public class HumanYearConverterActivity extends AppCompatActivity {
         decimalFormat = new DecimalFormat("#.#");
 
         initializeViews();
+        clearButtonTints();
         setupSpinners();
         setupListeners();
 
@@ -116,6 +117,11 @@ public class HumanYearConverterActivity extends AppCompatActivity {
         btnReset = findViewById(R.id.btnReset);
     }
 
+    private void clearButtonTints() {
+        btnConvert.setBackgroundTintList(null);
+        btnReset.setBackgroundTintList(null);
+    }
+
     private void setupSpinners() {
         setSpinnerAdapter(spinnerPetCategory, petCategories);
         setSpinnerAdapter(spinnerPetSize, petSizes);
@@ -132,12 +138,7 @@ public class HumanYearConverterActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        btnBack.setOnClickListener(view -> finish());
 
         spinnerPetCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -153,19 +154,9 @@ public class HumanYearConverterActivity extends AppCompatActivity {
             }
         });
 
-        btnConvert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                convertAge();
-            }
-        });
+        btnConvert.setOnClickListener(view -> convertAge());
 
-        btnReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resetConverter();
-            }
-        });
+        btnReset.setOnClickListener(view -> resetConverter());
     }
 
     private void updateBreedSpinner(String category) {

@@ -62,6 +62,7 @@
                 android:background="@drawable/circle_light_button"
                 android:gravity="center"
                 android:text="×"
+                android:backgroundTint="@null"
                 android:textColor="#4E342E"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -497,6 +498,7 @@
                 android:layout_height="52dp"
                 android:background="@drawable/brown_rounded_button"
                 android:text="Calculate Monthly Cost"
+                android:backgroundTint="@null"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp"
@@ -510,6 +512,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/light_rounded_button"
                 android:text="Reset"
+                android:backgroundTint="@null"
                 android:textAllCaps="false"
                 android:textColor="#5B3A2E"
                 android:textSize="15sp"

@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAF7F2"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <!-- Top Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="94dp"
+        android:background="#FFFFFF"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="18dp"
+        android:paddingTop="24dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="Pawfect Logo"
+            android:scaleType="centerInside"
+            android:src="@drawable/pawfect_logo" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pawfect"
+                android:textColor="#5B3A2E"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Where paws meet their perfect match"
+                android:textColor="#8A746A"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="@drawable/circle_light_button"
+            android:gravity="center"
+            android:text="×"
+            android:textColor="#4E342E"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- Main Area With Brown Background + Transparent Paw Pattern -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#7A6048">
+
+        <!-- Transparent Paw Pattern Background -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.38"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/paw_pattern" />
+
+        <!-- Slight Brown Overlay To Match Website Look -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#55000000" />
+
+        <!-- Quiz Content -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/txtQuizTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:shadowColor="#5A3E2E"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="3"
+                android:text="Find Your Perfect Pet"
+                android:textColor="#FFFFFF"
+                android:textSize="29sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtQuizSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="Answer one question at a time"
+                android:textColor="#FDF7F0"
+                android:textSize="14sp" />
+
+            <!-- Question Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/questionCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                card_view:cardBackgroundColor="#B7A38C"
+                card_view:cardCornerRadius="22dp"
+                card_view:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="22dp">
+
+                    <TextView
+                        android:id="@+id/txtProgress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Question 1 of 10"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="8dp"
+                        android:max="10"
+                        android:progress="1"
+                        android:progressBackgroundTint="#D8C7B5"
+                        android:progressTint="#6B4638" />
+
+                    <TextView
+                        android:id="@+id/txtQuestion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Question"
+                        android:textColor="#FFFFFF"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btnOption1"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:layout_marginTop="24dp"
+                        android:background="@drawable/quiz_option_button"
+                        android:backgroundTint="@null"
+                        android:text="Option 1"
+                        android:textAllCaps="false"
+                        android:textColor="#7B624C"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btnOption2"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/quiz_option_button"
+                        android:backgroundTint="@null"
+                        android:text="Option 2"
+                        android:textAllCaps="false"
+                        android:textColor="#7B624C"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btnOption3"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/quiz_option_button"
+                        android:backgroundTint="@null"
+                        android:text="Option 3"
+                        android:textAllCaps="false"
+                        android:textColor="#7B624C"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btnOption4"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/quiz_option_button"
+                        android:backgroundTint="@null"
+                        android:text="Option 4"
+                        android:textAllCaps="false"
+                        android:textColor="#7B624C"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnPrevious"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/light_rounded_button"
+                            android:backgroundTint="@null"
+                            android:text="Previous"
+                            android:textAllCaps="false"
+                            android:textColor="#5B3A2E"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/btnNext"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/brown_rounded_button"
+                            android:backgroundTint="@null"
+                            android:text="Next"
+                            android:textAllCaps="false"
+                            android:textColor="#FFFFFF"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Result Card -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/resultCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                card_view:cardBackgroundColor="#FFFFFF"
+                card_view:cardCornerRadius="22dp"
+                card_view:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Your Perfect Match"
+                        android:textColor="#4E342E"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtPrediction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/result_box"
+                        android:gravity="center"
+                        android:padding="14dp"
+                        android:text="Recommended Category: -"
+                        android:textColor="#E85D04"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtConfidence"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:text="Category Confidence: -"
+                        android:textColor="#5B3A2E"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtModelStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:text="Model Status: -"
+                        android:textColor="#7A6A62"
+                        android:textSize="11sp" />
+
+                    <ImageView
+                        android:id="@+id/imgExactPet"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:layout_marginTop="14dp"
+                        android:background="#F4EFEB"
+                        android:contentDescription="Recommended pet image"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/pawfect_logo" />
+
+                    <TextView
+                        android:id="@+id/txtExactPetName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="Pet Name"
+                        android:textColor="#3E2723"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtExactPetCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:text="Category"
+                        android:textColor="#8A746A"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtExactPetDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Description"
+                        android:textColor="#4E342E"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/txtReason"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Reason:"
+                        android:textColor="#6A5F5A"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/btnStartAgain"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/brown_rounded_button"
+                        android:backgroundTint="@null"
+                        android:text="Start Again"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

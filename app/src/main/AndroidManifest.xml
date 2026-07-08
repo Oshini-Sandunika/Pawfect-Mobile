@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pawfect_Mobile">
         <activity
-            android:name=".ToolsActivity"
+            android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,9 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ToolsActivity" />
         <activity android:name=".AdoptionCostActivity" />
         <activity android:name=".MonthlyCareBudgetActivity" />
         <activity android:name=".HumanYearConverterActivity" />
+        <activity android:name=".FindPerfectPetActivity" />
     </application>
 
 </manifest>

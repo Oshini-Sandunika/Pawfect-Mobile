@@ -106,6 +106,7 @@ public class AdoptionCostActivity extends AppCompatActivity {
         numberFormat = NumberFormat.getNumberInstance(Locale.US);
 
         initializeViews();
+        clearButtonTints();
         setupSpinners();
         setupListeners();
 
@@ -141,6 +142,11 @@ public class AdoptionCostActivity extends AppCompatActivity {
         btnReset = findViewById(R.id.btnReset);
     }
 
+    private void clearButtonTints() {
+        btnCalculate.setBackgroundTintList(null);
+        btnReset.setBackgroundTintList(null);
+    }
+
     private void setupSpinners() {
         setSpinnerAdapter(spinnerPetCategory, petCategories);
         setSpinnerAdapter(spinnerPetSize, petSizes);
@@ -159,12 +165,7 @@ public class AdoptionCostActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        btnBack.setOnClickListener(view -> finish());
 
         spinnerPetCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -196,12 +197,7 @@ public class AdoptionCostActivity extends AppCompatActivity {
         spinnerAgeGroup.setOnItemSelectedListener(commonSpinnerListener);
         spinnerAdoptionSource.setOnItemSelectedListener(commonSpinnerListener);
 
-        CompoundButton.OnCheckedChangeListener checkListener = new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                calculateEstimate();
-            }
-        };
+        CompoundButton.OnCheckedChangeListener checkListener = (buttonView, isChecked) -> calculateEstimate();
 
         checkVaccination.setOnCheckedChangeListener(checkListener);
         checkAccessories.setOnCheckedChangeListener(checkListener);
@@ -212,19 +208,9 @@ public class AdoptionCostActivity extends AppCompatActivity {
         checkTraining.setOnCheckedChangeListener(checkListener);
         checkInsurance.setOnCheckedChangeListener(checkListener);
 
-        btnCalculate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculateEstimate();
-            }
-        });
+        btnCalculate.setOnClickListener(view -> calculateEstimate());
 
-        btnReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resetCalculator();
-            }
-        });
+        btnReset.setOnClickListener(view -> resetCalculator());
     }
 
     private void updateBreedSpinner(String category) {

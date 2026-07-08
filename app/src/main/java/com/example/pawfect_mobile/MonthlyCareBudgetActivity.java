@@ -123,6 +123,7 @@ public class MonthlyCareBudgetActivity extends AppCompatActivity {
         numberFormat = NumberFormat.getNumberInstance(Locale.US);
 
         initializeViews();
+        clearButtonTints();
         setupSpinners();
         setupListeners();
 
@@ -163,6 +164,11 @@ public class MonthlyCareBudgetActivity extends AppCompatActivity {
         btnReset = findViewById(R.id.btnReset);
     }
 
+    private void clearButtonTints() {
+        btnCalculate.setBackgroundTintList(null);
+        btnReset.setBackgroundTintList(null);
+    }
+
     private void setupSpinners() {
         setSpinnerAdapter(spinnerPetCategory, petCategories);
         setSpinnerAdapter(spinnerPetSize, petSizes);
@@ -184,12 +190,7 @@ public class MonthlyCareBudgetActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        btnBack.setOnClickListener(view -> finish());
 
         spinnerPetCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -223,12 +224,7 @@ public class MonthlyCareBudgetActivity extends AppCompatActivity {
         spinnerCareLevel.setOnItemSelectedListener(commonSpinnerListener);
         spinnerVetPlan.setOnItemSelectedListener(commonSpinnerListener);
 
-        CompoundButton.OnCheckedChangeListener checkListener = new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                calculateMonthlyCost();
-            }
-        };
+        CompoundButton.OnCheckedChangeListener checkListener = (buttonView, isChecked) -> calculateMonthlyCost();
 
         checkGrooming.setOnCheckedChangeListener(checkListener);
         checkInsurance.setOnCheckedChangeListener(checkListener);
@@ -239,19 +235,9 @@ public class MonthlyCareBudgetActivity extends AppCompatActivity {
         checkWalking.setOnCheckedChangeListener(checkListener);
         checkEmergency.setOnCheckedChangeListener(checkListener);
 
-        btnCalculate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculateMonthlyCost();
-            }
-        });
+        btnCalculate.setOnClickListener(view -> calculateMonthlyCost());
 
-        btnReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resetCalculator();
-            }
-        });
+        btnReset.setOnClickListener(view -> resetCalculator());
     }
 
     private void updateBreedSpinner(String category) {

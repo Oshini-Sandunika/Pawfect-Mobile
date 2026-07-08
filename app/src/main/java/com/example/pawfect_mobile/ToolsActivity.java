@@ -1,15 +1,14 @@
 package com.example.pawfect_mobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.Toast;
-import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ToolsActivity extends AppCompatActivity {
 
-    Button btnAdoptionCost, btnMonthlyBudget, btnHumanYear;
+    private Button btnAdoptionCost, btnMonthlyBudget, btnHumanYear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +19,13 @@ public class ToolsActivity extends AppCompatActivity {
         btnMonthlyBudget = findViewById(R.id.btnMonthlyBudget);
         btnHumanYear = findViewById(R.id.btnHumanYear);
 
+        // Remove Android default purple button tint
+        btnAdoptionCost.setBackgroundTintList(null);
+        btnMonthlyBudget.setBackgroundTintList(null);
+        btnHumanYear.setBackgroundTintList(null);
+
         btnAdoptionCost.setOnClickListener(v -> {
-            Intent intent = new Intent(ToolsActivity.this, com.example.pawfect_mobile.AdoptionCostActivity.class);
+            Intent intent = new Intent(ToolsActivity.this, AdoptionCostActivity.class);
             startActivity(intent);
         });
 

@@ -44,4 +44,5 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation("com.google.ai.edge.litert:litert:2.1.0")
 }
