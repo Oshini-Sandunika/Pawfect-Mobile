@@ -1,47 +1,63 @@
 # Pawfect Mobile App
 
-Pawfect Mobile is an Android application developed as the mobile version of the Pawfect pet adoption website. The app focuses on helping users plan for pet ownership through mobile-friendly tools such as cost estimators, monthly care budget calculators, and pet age conversion.
+Pawfect Mobile is an Android application developed as the mobile version of the Pawfect pet adoption website. The app helps users find a suitable pet for their lifestyle and plan pet ownership costs through mobile-friendly tools.
 
-This project is developed using **Android Studio** with **Java** and **XML**.
+This project is developed using **Android Studio**, **Java**, and **XML**.
 
 ---
 
 ## Project Overview
 
-Pawfect is a pet adoption support platform designed to help users find and prepare for their perfect pet. The mobile version extends the existing website by adding interactive pet ownership tools and preparing the foundation for future AI-based pet recommendation features.
+Pawfect is a pet adoption support platform designed to help users find and prepare for their perfect pet. The mobile version extends the existing Pawfect website by adding an AI-based pet recommendation feature, pet ownership calculators, and a pet age converter.
+
+The application is designed with a brown and cream theme to match the Pawfect website UI.
 
 ---
 
 ## Main Features
 
-### 1. Pet Ownership Tools Screen
+### 1. Home Screen
 
-The tools screen provides access to different pet ownership calculators in a mobile-friendly layout.
+The home screen provides access to the main parts of the app:
 
-Available tools:
+- Find Your Perfect Pet
+- Pet Ownership Tools
 
-- Adoption Cost Estimator
-- Monthly Pet Care Cost Calculator
-- Human Year Converter
+Users can navigate easily from the home screen to the AI recommendation quiz or the pet care tools.
 
 ---
 
-### 2. Adoption Cost Estimator
+### 2. Find Your Perfect Pet
 
-The Adoption Cost Estimator helps users estimate the initial cost of adopting a pet.
+The Find Your Perfect Pet feature recommends a suitable pet based on the user’s lifestyle preferences.
+
+This feature uses a one-question-at-a-time quiz interface with a progress bar. Users answer lifestyle-based questions, and the app predicts the most suitable pet category using a TensorFlow Lite model.
 
 Features include:
 
-- Select pet category
-- Select breed or pet type
-- Select pet size
-- Select age group
-- Select adoption source
-- Add optional initial care services
-- View total estimated adoption cost
-- View cost breakdown
+- One-question-at-a-time questionnaire
+- Progress bar
+- Lifestyle-based answer options
+- TensorFlow Lite pet category prediction
+- Exact breed or pet type recommendation
+- Recommended pet image display
+- Explanation of the recommendation
+- Start again option
 
-Supported pet categories:
+The questionnaire considers factors such as:
+
+- Living space
+- Activity level
+- Daily time availability
+- Allergy concerns
+- Children at home
+- Monthly pet care budget
+- Grooming tolerance
+- Noise tolerance
+- Pet ownership experience
+- Preferred pet size
+
+Supported predicted pet categories:
 
 - Dog
 - Cat
@@ -49,100 +65,10 @@ Supported pet categories:
 - Bird
 - Fish
 
-Example cost factors:
+The app first predicts the main pet category and then selects one exact suitable pet breed or type based on the user’s answers.
 
-- Adoption fee
-- Vaccination
-- Starter accessories
-- Microchip or identification
-- First vet checkup
-- Grooming
-- Spay or neuter estimate
-- Training or settling support
-- Insurance estimate
-
----
-
-### 3. Monthly Pet Care Cost Calculator
-
-The Monthly Pet Care Cost Calculator helps users estimate the ongoing monthly and yearly cost of caring for a pet.
-
-Features include:
-
-- Select pet category
-- Select breed or pet type
-- Select pet size
-- Select age group
-- Select food quality
-- Select care level
-- Select vet saving plan
-- Add optional monthly care services
-- View monthly cost
-- View yearly cost
-- View cost breakdown
-
-Example monthly cost factors:
-
-- Food cost
-- Routine care
-- Vet saving
-- Grooming
-- Pet insurance
-- Toys and treats
-- Training
-- Medicine or supplements
-- Cleaning supplies
-- Emergency fund saving
-
----
-
-### 4. Human Year Converter
-
-The Human Year Converter converts a pet’s age into approximate human years.
-
-Features include:
-
-- Select pet category
-- Select breed or pet type
-- Select pet size
-- Enter pet age
-- Convert pet age into approximate human years
-- Display pet life stage
-- Show explanation of the result
-
-Supported pet categories:
-
-- Dog
-- Cat
-- Rabbit
-- Bird
-- Fish
-
----
-
-## Future Enhancement
-
-The mobile app is designed to later include an AI-powered pet recommendation system.
-
-Planned AI feature:
-
-### Find Your Perfect Pet
-
-This feature will include:
-
-- A pet preference questionnaire
-- TensorFlow Lite model integration
-- Pet category prediction
-- Display of matching pets based on prediction
-- Connection between predicted pet category and cost calculators
-
-Example flow:
+Example output:
 
 ```text
-User answers pet quiz
-↓
-TensorFlow Lite model predicts suitable pet category
-↓
-App displays matching pets
-↓
-User opens cost calculator for the recommended pet
+Recommended Category: Dog
+Best Matching Pet: Shih Tzu
