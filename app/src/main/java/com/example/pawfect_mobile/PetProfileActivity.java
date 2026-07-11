@@ -17,22 +17,58 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Locale;
+
 public class PetProfileActivity extends AppCompatActivity {
 
     private ImageView petImageView;
-    private TextView petNameTextView, petBreedTextView, petAgeTextView, petMonthlyCostTextView, petDescriptionTextView;
+    private TextView petNameTextView;
+    private TextView petBreedTextView;
+    private TextView petAgeTextView;
+    private TextView petMonthlyCostTextView;
+    private TextView petDescriptionTextView;
     private Button btnAdoptMe;
 
-    private DatabaseReference mDatabase;
+    private DatabaseReference petReference;
+
     private Pet currentPet;
+
+    // This is the Firebase child key
     private String petId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(Bundle.valueOf(1));
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_profile);
 
-        // Initialize Views
+        initializeViews();
+
+        petId = getIntent().getStringExtra("PET_ID");
+
+        if (petId == null || petId.trim().isEmpty()) {
+            Toast.makeText(
+                    this,
+                    "Pet ID was not provided",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            finish();
+            return;
+        }
+
+        petReference = FirebaseDatabase
+                .getInstance()
+                .getReference("Pets")
+                .child(petId);
+
+        btnAdoptMe.setEnabled(false);
+
+        loadPetData();
+
+        btnAdoptMe.setOnClickListener(v -> openAdoptionRequest());
+    }
+
+    private void initializeViews() {
         petImageView = findViewById(R.id.petImageView);
         petNameTextView = findViewById(R.id.petNameTextView);
         petBreedTextView = findViewById(R.id.petBreedTextView);
@@ -40,77 +76,140 @@ public class PetProfileActivity extends AppCompatActivity {
         petMonthlyCostTextView = findViewById(R.id.petMonthlyCostTextView);
         petDescriptionTextView = findViewById(R.id.petDescriptionTextView);
         btnAdoptMe = findViewById(R.id.btnAdoptMe);
-
-        // Get Pet ID from Intent (if not passed, use a mock ID for testing)
-        petId = getIntent().getStringExtra("PET_ID");
-        if (petId == null || petId.isEmpty()) {
-            petId = "mock_pet_1"; // Used for testing if not navigated from a list
-        }
-
-        mDatabase = FirebaseDatabase.getInstance().getReference("Pets").child(petId);
-        loadPetData();
-
-        btnAdoptMe.setOnClickListener(v -> {
-            if (currentPet != null) {
-                Intent intent = new Intent(PetProfileActivity.this, AdoptionRequestActivity.class);
-                intent.putExtra("PET_ID", currentPet.getId());
-                intent.putExtra("PET_NAME", currentPet.getName());
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "Pet data is still loading...", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void loadPetData() {
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    currentPet = snapshot.getValue(Pet.class);
-                    if (currentPet != null) {
-                        updateUI();
-                    }
-                } else {
-                    // Create dummy pet if it doesn't exist just for demonstration purposes
-                    createDummyPet();
-                }
-            }
+        petReference.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(PetProfileActivity.this, "Failed to load pet.", Toast.LENGTH_SHORT).show();
-            }
-        });
+                        if (!snapshot.exists()) {
+                            Toast.makeText(
+                                    PetProfileActivity.this,
+                                    "Pet details were not found",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+
+                            finish();
+                            return;
+                        }
+
+                        currentPet = snapshot.getValue(Pet.class);
+
+                        if (currentPet == null) {
+                            Toast.makeText(
+                                    PetProfileActivity.this,
+                                    "Unable to read pet details",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+
+                            finish();
+                            return;
+                        }
+
+                        updateUI();
+                        btnAdoptMe.setEnabled(true);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(
+                                PetProfileActivity.this,
+                                "Failed to load pet: " + error.getMessage(),
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
+                }
+        );
     }
 
     private void updateUI() {
-        petNameTextView.setText(currentPet.getName());
-        petBreedTextView.setText(currentPet.getBreed() + " • " + currentPet.getSpecies());
-        petAgeTextView.setText(currentPet.getAge());
-        petMonthlyCostTextView.setText("$" + String.format("%.2f", currentPet.getMonthlyCost()) + "/mo");
-        petDescriptionTextView.setText(currentPet.getDescription());
+        String name = getSafeText(
+                currentPet.getName(),
+                "Unknown Pet"
+        );
 
-        if (currentPet.getImageUrl() != null && !currentPet.getImageUrl().isEmpty()) {
+        String breed = getSafeText(
+                currentPet.getBreed(),
+                "Unknown breed"
+        );
+
+        String species = getSafeText(
+                currentPet.getSpecies(),
+                "Unknown species"
+        );
+
+        String age = getSafeText(
+                currentPet.getAge(),
+                "Age not available"
+        );
+
+        String description = getSafeText(
+                currentPet.getDescription(),
+                "No description available"
+        );
+
+        petNameTextView.setText(name);
+        petBreedTextView.setText(breed + " • " + species);
+        petAgeTextView.setText(age);
+        petDescriptionTextView.setText(description);
+
+        String monthlyCost = String.format(
+                Locale.getDefault(),
+                "Rs. %.2f/month",
+                currentPet.getMonthlyCost()
+        );
+
+        petMonthlyCostTextView.setText(monthlyCost);
+
+        String imageUrl = currentPet.getImageUrl();
+
+        if (imageUrl != null && !imageUrl.trim().isEmpty()) {
             Glide.with(this)
-                 .load(currentPet.getImageUrl())
-                 .placeholder(android.R.color.darker_gray)
-                 .into(petImageView);
+                    .load(imageUrl)
+                    .placeholder(android.R.color.darker_gray)
+                    .error(android.R.color.darker_gray)
+                    .into(petImageView);
+        } else {
+            petImageView.setImageResource(
+                    android.R.color.darker_gray
+            );
         }
     }
 
-    private void createDummyPet() {
-        currentPet = new Pet(
-            petId,
-            "Bella",
-            "Dog",
-            "Golden Retriever",
-            "2 yrs",
-            "Bella is a very friendly and playful Golden Retriever. She loves outdoor activities and is great with kids. She is fully vaccinated and looking for a loving forever home.",
-            "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=800",
-            45.50
+    private void openAdoptionRequest() {
+        if (currentPet == null) {
+            Toast.makeText(
+                    this,
+                    "Pet data is still loading",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+        Intent intent = new Intent(
+                PetProfileActivity.this,
+                AdoptionRequestActivity.class
         );
-        mDatabase.setValue(currentPet);
-        updateUI();
+
+        // Use the Firebase child key
+        intent.putExtra("PET_ID", petId);
+
+        intent.putExtra(
+                "PET_NAME",
+                getSafeText(currentPet.getName(), "Unknown Pet")
+        );
+
+        startActivity(intent);
+    }
+
+    private String getSafeText(String value, String fallback) {
+        if (value == null || value.trim().isEmpty()) {
+            return fallback;
+        }
+
+        return value.trim();
     }
 }

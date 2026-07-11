@@ -22,7 +22,7 @@ public class AdoptionRequestActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(Bundle.valueOf(1));
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adoption_request);
 
         petId = getIntent().getStringExtra("PET_ID");
