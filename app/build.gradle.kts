@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.activity.ktx)
     implementation(libs.appcompat)
     implementation(libs.constraintlayout)
+    implementation(libs.fragment.compose)
     implementation(libs.material)
     implementation(libs.ui.text.google.fonts)
     testImplementation(libs.junit)
@@ -73,6 +74,7 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.ui.tooling.preview)
     debugImplementation(libs.ui.tooling)
+    implementation(libs.activity.compose)
 
     // Glide for image loading
     implementation(libs.glide)
