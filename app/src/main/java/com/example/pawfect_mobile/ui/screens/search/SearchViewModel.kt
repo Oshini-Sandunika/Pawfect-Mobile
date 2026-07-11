@@ -36,8 +36,15 @@ class SearchViewModel : ViewModel() {
 
     private fun performSearch() {
         val currentState = _state.value
-        if (currentState.query.isBlank() && currentState.selectedType == "All") {
-            _state.update { it.copy(hasSearched = false, results = emptyList(), error = null, isLoading = false) }
+        if (currentState.query.isBlank()) {
+            _state.update {
+                it.copy(
+                    hasSearched = false,
+                    results = emptyList(),
+                    error = null,
+                    isLoading = false
+                )
+            }
             return
         }
 
