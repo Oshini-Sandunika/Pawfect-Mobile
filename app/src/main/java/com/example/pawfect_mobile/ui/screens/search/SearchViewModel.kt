@@ -21,7 +21,7 @@ class SearchViewModel : ViewModel() {
 
 
     fun onQueryChange(query: String) {
-        _state.update { it.copy(query = query) }
+        _state.update { it.copy(query = query, isLoading = true, hasSearched = true) }
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             delay(500.milliseconds) // debounce
@@ -36,8 +36,8 @@ class SearchViewModel : ViewModel() {
 
     private fun performSearch() {
         val currentState = _state.value
-        if (currentState.query.isBlank()) {
-            _state.update { it.copy(hasSearched = false, results = emptyList(), error = null) }
+        if (currentState.query.isBlank() && currentState.selectedType == "All") {
+            _state.update { it.copy(hasSearched = false, results = emptyList(), error = null, isLoading = false) }
             return
         }
 
