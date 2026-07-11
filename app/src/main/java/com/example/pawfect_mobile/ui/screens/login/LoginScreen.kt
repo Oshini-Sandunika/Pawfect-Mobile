@@ -42,7 +42,6 @@ fun LoginScreen(
             onValueChange = viewModel::updateEmail,
             inputType = InputType.EMAIL,
             required = true,
-            errorMessage = state.emailError
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextInput(
@@ -51,9 +50,8 @@ fun LoginScreen(
             onValueChange = viewModel::updatePassword,
             inputType = InputType.PASSWORD,
             required = true,
-            errorMessage = state.passwordError
         )
-        
+
         if (state.loginError != null) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(state.loginError!!, color = MaterialTheme.colorScheme.error)
@@ -64,7 +62,7 @@ fun LoginScreen(
         Button(
             onClick = viewModel::login,
             modifier = Modifier.fillMaxWidth(),
-            enabled = !state.isLoading
+            enabled = !state.isLoading && state.email.valid && state.password.valid
         ) {
             Text(if (state.isLoading) "Logging in..." else "Login")
         }

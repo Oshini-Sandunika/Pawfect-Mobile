@@ -42,7 +42,6 @@ fun RegisterScreen(
             onValueChange = viewModel::updateFullName,
             inputType = InputType.TEXT,
             required = true,
-            errorMessage = state.fullNameError
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextInput(
@@ -51,7 +50,6 @@ fun RegisterScreen(
             onValueChange = viewModel::updateEmail,
             inputType = InputType.EMAIL,
             required = true,
-            errorMessage = state.emailError
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextInput(
@@ -60,7 +58,6 @@ fun RegisterScreen(
             onValueChange = viewModel::updatePhone,
             inputType = InputType.PHONE,
             required = true,
-            errorMessage = state.phoneError
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextInput(
@@ -69,7 +66,6 @@ fun RegisterScreen(
             onValueChange = viewModel::updatePassword,
             inputType = InputType.PASSWORD,
             required = true,
-            errorMessage = state.passwordError
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextInput(
@@ -78,14 +74,13 @@ fun RegisterScreen(
             onValueChange = viewModel::updateConfirmPassword,
             inputType = InputType.PASSWORD,
             required = true,
-            errorMessage = state.confirmPasswordError,
             validator = {
                 if (it.isBlank()) "Please confirm your password"
-                else if (it != state.password) "Passwords do not match"
+                else if (it != state.password.string()) "Passwords do not match"
                 else null
             }
         )
-        
+
         if (state.registerError != null) {
             Spacer(modifier = Modifier.height(8.dp))
             Text(state.registerError!!, color = MaterialTheme.colorScheme.error)
@@ -96,7 +91,12 @@ fun RegisterScreen(
         Button(
             onClick = viewModel::register,
             modifier = Modifier.fillMaxWidth(),
-            enabled = !state.isLoading
+            enabled = !state.isLoading &&
+                    state.password.valid
+                    && state.fullName.valid
+                    && state.confirmPassword.valid
+                    && state.phone.valid
+                    && state.email.valid
         ) {
             Text(if (state.isLoading) "Registering..." else "Register")
         }

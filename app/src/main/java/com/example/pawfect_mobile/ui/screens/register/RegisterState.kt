@@ -1,16 +1,13 @@
 package com.example.pawfect_mobile.ui.screens.register
 
+import com.example.pawfect_mobile.ui.components.Input
+
 data class RegisterState(
-    val fullName: String = "",
-    val fullNameError: String? = null,
-    val email: String = "",
-    val emailError: String? = null,
-    val phone: String = "",
-    val phoneError: String? = null,
-    val password: String = "",
-    val passwordError: String? = null,
-    val confirmPassword: String = "",
-    val confirmPasswordError: String? = null,
+    val fullName: Input = Input.Unset,
+    val email: Input = Input.Unset,
+    val phone: Input = Input.Unset,
+    val password: Input = Input.Unset,
+    val confirmPassword: Input = Input.Unset,
     val isLoading: Boolean = false,
     val registerError: String? = null,
     val registerSuccess: Boolean = false

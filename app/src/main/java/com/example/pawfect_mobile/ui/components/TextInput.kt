@@ -1,5 +1,6 @@
 package com.example.pawfect_mobile.ui.components
 
+import android.util.Patterns
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,11 +34,11 @@ enum class InputType {
 
     },
     EMAIL {
-        override val keyboardType:  KeyboardOptions =
+        override val keyboardType: KeyboardOptions =
             KeyboardOptions(keyboardType = KeyboardType.Email)
 
         override fun validate(input: String): String? {
-            return if (input.isNotBlank() && !android.util.Patterns.EMAIL_ADDRESS.matcher(input)
+            return if (input.isNotBlank() && !Patterns.EMAIL_ADDRESS.matcher(input)
                     .matches()
             ) {
                 "Invalid email format"
@@ -71,22 +73,45 @@ enum class InputType {
     }
 }
 
+sealed class Input {
+    object Unset : Input()
+    class Valid(val value: String) : Input() {
+        override fun string(): String = value
+    }
+
+    class Invalid(val value: String, val error: String) : Input() {
+        override fun string(): String = value
+        override fun error(): String = error
+    }
+
+    val valid = this is Valid
+
+    open fun error(): String? = null
+    open fun string(): String = ""
+}
+
 @Composable
 fun TextInput(
     label: String,
-    value: String,
-    onValueChange: (String) -> Unit,
+    value: Input,
+    onValueChange: (Input) -> Unit,
     inputType: InputType = InputType.TEXT,
     required: Boolean = false,
     description: String = "",
-    errorMessage: String? = null,
     validator: ((String) -> String?)? = null
 ) {
-    var internalError by remember { mutableStateOf<String?>(null) }
     var hasFocus by remember { mutableStateOf(false) }
+    var hadFocus by remember { mutableStateOf(false) }
     var passwordVisible by remember { mutableStateOf(false) }
 
-    val displayError = errorMessage ?: internalError
+    LaunchedEffect(required, value is Input.Unset) {
+        // todo: find a better way to do this
+        if (required && value is Input.Unset) {
+            onValueChange(Input.Invalid("", "$label cannot be empty"))
+        }
+    }
+
+    val displayError = value.error()
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(modifier = Modifier.padding(bottom = 4.dp)) {
@@ -101,26 +126,35 @@ fun TextInput(
             }
         }
         TextField(
-            value = value,
+            value = value.string(),
             onValueChange = {
-                internalError = null
-                onValueChange(it)
+                var err: String?;
+                if (it.isEmpty() && required) {
+                    err = "$label cannot be empty"
+                } else {
+                    // Run default validation first
+                    err = inputType.validate(it)
+                    // Run custom validation if default passes or doesn't apply
+                    if (err == null && validator != null) {
+                        err = validator(it)
+                    }
+                }
+
+                if (err != null) {
+                    onValueChange(Input.Invalid(it, err))
+                } else {
+                    onValueChange(Input.Valid(it))
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .onFocusChanged { focusState ->
-                    if (hasFocus && !focusState.isFocused) {
-                        // Run default validation first
-                        var err = inputType.validate(value)
-                        // Run custom validation if default passes or doesn't apply
-                        if (err == null && validator != null) {
-                            err = validator(value)
-                        }
-                        internalError = err
+                    if (!focusState.isFocused && hasFocus) {
+                        hadFocus = true
                     }
                     hasFocus = focusState.isFocused
                 },
-            isError = displayError != null,
+            isError = displayError != null && hadFocus,
             visualTransformation = inputType.visualTransformation,
             keyboardOptions = inputType.keyboardType,
             trailingIcon = {
@@ -136,7 +170,7 @@ fun TextInput(
                 }
             },
             supportingText = {
-                if (displayError != null) {
+                if (displayError != null && !hasFocus && hadFocus) {
                     Text(displayError, color = MaterialTheme.colorScheme.error)
                 } else if (description.isNotEmpty()) {
                     Text(description)
@@ -155,7 +189,7 @@ fun TextInputPreview() {
             Box(modifier = Modifier.padding(12.dp)) {
                 TextInput(
                     label = "Test Password",
-                    value = "",
+                    value = Input.Unset,
                     onValueChange = {},
                     inputType = InputType.PASSWORD,
                     required = true,

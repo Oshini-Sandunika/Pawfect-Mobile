@@ -1,6 +1,7 @@
 package com.example.pawfect_mobile.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -19,6 +20,15 @@ fun AppNavigation() {
         HomeRoute
     } else {
         LoginRoute
+    }
+
+    LaunchedEffect("logout") {
+        Firebase.auth.addAuthStateListener {
+            if (it.currentUser == null) {
+                navController.navigate(LoginRoute)
+            }
+
+        }
     }
 
     NavHost(navController = navController, startDestination = startDest) {
