@@ -40,12 +40,12 @@ fun ActionCard(onSearchClick: () -> Unit, modifier: Modifier = Modifier) {
 
     Card(
         modifier = modifier,
-        shape = RoundedCornerShape(4.dp),
+        shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = androidx.compose.ui.graphics.Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Search()
+            Search(onSearchClick)
             Spacer(modifier = Modifier.height(16.dp))
 
             // Tool Links

@@ -54,6 +54,25 @@ object AuthService {
         Firebase.auth.sendPasswordResetEmail(email).await()
     }
 
+    suspend fun updateProfile(fullName: String, phone: String) {
+        val user = _currentUserFlow.value ?: return
+        val updatedUser = user.copy(fullName = fullName, phone = phone)
+        Firebase.firestore.collection("users").document(user.userId)
+            .set(updatedUser).await()
+        _currentUserFlow.value = updatedUser
+    }
+
+    suspend fun updatePassword(newPassword: String) {
+        Firebase.auth.currentUser?.updatePassword(newPassword)?.await()
+    }
+
+    suspend fun deleteAccount() {
+        val user = _currentUserFlow.value ?: return
+        Firebase.firestore.collection("users").document(user.userId).delete().await()
+        Firebase.auth.currentUser?.delete()?.await()
+        _currentUserFlow.value = null
+    }
+
     fun logout() {
         Firebase.auth.signOut()
         _currentUserFlow.value = null

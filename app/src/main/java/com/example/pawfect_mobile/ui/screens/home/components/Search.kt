@@ -12,6 +12,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -19,11 +20,17 @@ import androidx.compose.ui.unit.dp
 import com.example.pawfect_mobile.R
 
 @Composable
-fun Search() {
+fun Search(onSearchClick: () -> Unit) {
     OutlinedTextField(
         value = "",
         onValueChange = {},
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .onFocusChanged {
+                if (it.isFocused) {
+                    onSearchClick()
+                }
+            },
         placeholder = { Text(stringResource(R.string.search_pets)) },
         readOnly = true,
         leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },

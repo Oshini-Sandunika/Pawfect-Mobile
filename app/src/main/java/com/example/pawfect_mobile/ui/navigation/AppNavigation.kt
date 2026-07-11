@@ -1,5 +1,7 @@
 package com.example.pawfect_mobile.ui.navigation
 
+import kotlinx.serialization.Serializable
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -11,6 +13,7 @@ import com.example.pawfect_mobile.data.AuthService
 import com.example.pawfect_mobile.ui.screens.SplashScreen
 import com.example.pawfect_mobile.ui.screens.home.HomeScreen
 import com.example.pawfect_mobile.ui.screens.login.LoginScreen
+import com.example.pawfect_mobile.ui.screens.profile.ProfileScreen
 import com.example.pawfect_mobile.ui.screens.register.RegisterScreen
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -77,7 +80,22 @@ fun AppNavigation() {
             )
         }
         composable<HomeRoute> {
-            HomeScreen(onProfileClick = {}, onSearchClick = {}, onPetClick = {})
+            HomeScreen(
+                onProfileClick = {
+                    navController.navigate(ProfileRoute)
+                },
+                onSearchClick = {},
+                onPetClick = {}
+            )
+        }
+        composable<ProfileRoute> {
+            ProfileScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }
+
+@Serializable object ProfileRoute
