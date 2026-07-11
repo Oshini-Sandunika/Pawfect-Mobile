@@ -13,7 +13,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.pawfect_mobile.ui.theme.AppTheme
 
 @Composable
-fun AppLayout(content: @Composable (BoxScope.() -> Unit)) {
+fun AppLayout(
+    content: @Composable (BoxScope.() -> Unit),
+) {
     val snackState = remember { SnackbarHostState() }
 
     AppTheme {

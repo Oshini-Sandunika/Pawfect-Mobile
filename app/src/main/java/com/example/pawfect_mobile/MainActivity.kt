@@ -33,10 +33,3 @@ class MainActivity : FragmentActivity() {
         }
     }
 }
-
-@Composable
-fun Home() {
-    AppLayout {
-        Button({ Firebase.auth.signOut() }) { Text("Logout") }
-    }
-}

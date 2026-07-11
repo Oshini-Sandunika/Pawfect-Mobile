@@ -7,9 +7,9 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.pawfect_mobile.Home
 import com.example.pawfect_mobile.data.AuthService
 import com.example.pawfect_mobile.ui.screens.SplashScreen
+import com.example.pawfect_mobile.ui.screens.home.HomeScreen
 import com.example.pawfect_mobile.ui.screens.login.LoginScreen
 import com.example.pawfect_mobile.ui.screens.register.RegisterScreen
 import com.google.firebase.Firebase
@@ -77,7 +77,7 @@ fun AppNavigation() {
             )
         }
         composable<HomeRoute> {
-            Home()
+            HomeScreen()
         }
     }
 }

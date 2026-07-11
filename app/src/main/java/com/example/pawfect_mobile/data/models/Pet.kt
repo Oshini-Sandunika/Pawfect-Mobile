@@ -1,20 +1,15 @@
-package com.example.pawfect_mobile.data.models;
+package com.example.pawfect_mobile.data.models
 
-import java.io.Serializable;
+import java.io.Serializable
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Pet implements Serializable {
-    private String name;
-    private String species;
-    private String breed;
-    private String age;
-    private String description;
-    private String imageUrl;
-    private double monthlyCost;
-}
+class Pet(
+    var name: String? = null,
+    var species: String? = null,
+    var breed: String? = null,
+    var age: String? = null,
+    var description: String? = null,
+    var imageUrl: String? = null,
+    var featured: Boolean = false,
+    var adoptionFee: Double = 0.0,
+    var monthlyCost: Double = 0.0,
+) : Serializable
