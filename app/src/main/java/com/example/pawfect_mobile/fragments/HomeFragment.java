@@ -11,10 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.pawfect_mobile.FindPerfectPetActivity;
 import com.example.pawfect_mobile.PetProfileActivity;
 import com.example.pawfect_mobile.R;
-import com.example.pawfect_mobile.ToolsActivity;
 
 public class HomeFragment extends Fragment {
     @Nullable
@@ -41,8 +39,9 @@ public class HomeFragment extends Fragment {
         });
 
         btnPetRecommendation.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), FindPerfectPetActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(getActivity(), FindPerfectPetActivity.class);
+//            startActivity(intent);
         });
+
     }
 }

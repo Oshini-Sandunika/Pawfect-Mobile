@@ -1,0 +1,57 @@
+package com.example.pawfect_mobile.ui.navigation
+
+import androidx.compose.runtime.Composable
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.pawfect_mobile.Home
+import com.example.pawfect_mobile.ui.screens.Login
+import com.example.pawfect_mobile.ui.screens.Register
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+
+@Composable
+fun AppNavigation() {
+    val navController = rememberNavController()
+
+    // Check if user is already logged in
+    val startDest = if (Firebase.auth.currentUser != null) {
+        HomeRoute
+    } else {
+        LoginRoute
+    }
+
+    NavHost(navController = navController, startDestination = startDest) {
+        composable<LoginRoute> {
+            Login(
+                onNavigateToRegister = {
+                    navController.navigate(RegisterRoute)
+                },
+                onLoginSuccess = {
+                    navController.navigate(HomeRoute) {
+                        popUpTo<LoginRoute> { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable<RegisterRoute> {
+            Register(
+                onNavigateToLogin = {
+                    navController.navigate(LoginRoute) {
+                        popUpTo<LoginRoute> { inclusive = true }
+                    }
+                },
+                onRegisterSuccess = {
+                    navController.navigate(HomeRoute) {
+                        popUpTo<LoginRoute> { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable<HomeRoute> {
+            Home()
+        }
+    }
+}

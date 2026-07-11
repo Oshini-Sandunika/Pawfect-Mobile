@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.services)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 composeCompiler {
@@ -52,19 +53,22 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.fragment.compose)
     implementation(libs.material)
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
     implementation(libs.ui.text.google.fonts)
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
     implementation(libs.cardview)
     implementation(libs.litert)
-    compileOnly (libs.lombok)
-    annotationProcessor (libs.lombok)
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
 
     // Firebase BOM and Services
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.auth)
     implementation(libs.firebase.storage)
 
     // Jetpack compose
@@ -75,6 +79,8 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     debugImplementation(libs.ui.tooling)
     implementation(libs.activity.compose)
+    implementation(libs.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
 
     // Glide for image loading
     implementation(libs.glide)
