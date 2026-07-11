@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -45,4 +46,13 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("com.google.ai.edge.litert:litert:2.1.0")
+
+    // Firebase BOM and Services
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.storage)
+
+    // Glide for image loading
+    implementation(libs.glide)
 }

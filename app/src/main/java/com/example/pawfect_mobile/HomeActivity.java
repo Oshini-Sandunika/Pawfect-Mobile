@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private Button btnTools, btnPetRecommendation;
+    private Button btnTools, btnPetRecommendation, btnAdoptPet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,13 +17,20 @@ public class HomeActivity extends AppCompatActivity {
 
         btnTools = findViewById(R.id.btnTools);
         btnPetRecommendation = findViewById(R.id.btnPetRecommendation);
+        btnAdoptPet = findViewById(R.id.btnAdoptPet);
 
         // Remove Android default purple tint
         btnTools.setBackgroundTintList(null);
         btnPetRecommendation.setBackgroundTintList(null);
+        btnAdoptPet.setBackgroundTintList(null);
 
         btnTools.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, ToolsActivity.class);
+            startActivity(intent);
+        });
+
+        btnAdoptPet.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, PetProfileActivity.class);
             startActivity(intent);
         });
 
