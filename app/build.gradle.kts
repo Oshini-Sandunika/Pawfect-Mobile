@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.activity.compose)
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.lifecycle.viewmodel.compose)
 
     // Glide for image loading
     implementation(libs.glide)

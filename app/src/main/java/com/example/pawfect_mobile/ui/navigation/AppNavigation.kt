@@ -5,8 +5,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.pawfect_mobile.Home
-import com.example.pawfect_mobile.ui.screens.Login
-import com.example.pawfect_mobile.ui.screens.Register
+import com.example.pawfect_mobile.ui.screens.login.LoginScreen
+import com.example.pawfect_mobile.ui.screens.register.RegisterScreen
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
@@ -23,7 +23,7 @@ fun AppNavigation() {
 
     NavHost(navController = navController, startDestination = startDest) {
         composable<LoginRoute> {
-            Login(
+            LoginScreen(
                 onNavigateToRegister = {
                     navController.navigate(RegisterRoute)
                 },
@@ -36,7 +36,7 @@ fun AppNavigation() {
         }
 
         composable<RegisterRoute> {
-            Register(
+            RegisterScreen(
                 onNavigateToLogin = {
                     navController.navigate(LoginRoute) {
                         popUpTo<LoginRoute> { inclusive = true }
