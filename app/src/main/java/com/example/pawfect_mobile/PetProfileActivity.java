@@ -7,18 +7,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.pawfect_mobile.data.PetService;
 import com.example.pawfect_mobile.data.models.Pet;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
+
+import kotlin.Unit;
 
 public class PetProfileActivity extends AppCompatActivity {
 
@@ -30,7 +27,6 @@ public class PetProfileActivity extends AppCompatActivity {
     private TextView petDescriptionTextView;
     private Button btnAdoptMe;
 
-    private DatabaseReference petReference;
 
     private Pet currentPet;
 
@@ -57,11 +53,6 @@ public class PetProfileActivity extends AppCompatActivity {
             return;
         }
 
-        petReference = FirebaseDatabase
-                .getInstance()
-                .getReference("Pets")
-                .child(petId);
-
         btnAdoptMe.setEnabled(false);
 
         loadPetData();
@@ -80,49 +71,22 @@ public class PetProfileActivity extends AppCompatActivity {
     }
 
     private void loadPetData() {
-        petReference.addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+        PetService.INSTANCE.getPetById(petId, pet -> {
+            if (pet == null) {
+                Toast.makeText(
+                        PetProfileActivity.this,
+                        "Pet details were not found",
+                        Toast.LENGTH_SHORT
+                ).show();
 
-                        if (!snapshot.exists()) {
-                            Toast.makeText(
-                                    PetProfileActivity.this,
-                                    "Pet details were not found",
-                                    Toast.LENGTH_SHORT
-                            ).show();
+                finish();
+            }
 
-                            finish();
-                            return;
-                        }
-
-                        currentPet = snapshot.getValue(Pet.class);
-
-                        if (currentPet == null) {
-                            Toast.makeText(
-                                    PetProfileActivity.this,
-                                    "Unable to read pet details",
-                                    Toast.LENGTH_SHORT
-                            ).show();
-
-                            finish();
-                            return;
-                        }
-
-                        updateUI();
-                        btnAdoptMe.setEnabled(true);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(
-                                PetProfileActivity.this,
-                                "Failed to load pet: " + error.getMessage(),
-                                Toast.LENGTH_LONG
-                        ).show();
-                    }
-                }
-        );
+            currentPet = pet;
+            updateUI();
+            btnAdoptMe.setEnabled(true);
+            return Unit.INSTANCE;
+        });
     }
 
     private void updateUI() {

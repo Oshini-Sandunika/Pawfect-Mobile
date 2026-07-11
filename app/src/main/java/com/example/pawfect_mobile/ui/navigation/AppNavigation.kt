@@ -1,7 +1,7 @@
 package com.example.pawfect_mobile.ui.navigation
 
-import kotlinx.serialization.Serializable
-
+import android.content.Intent
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.pawfect_mobile.PetProfileActivity
 import com.example.pawfect_mobile.data.AuthService
 import com.example.pawfect_mobile.ui.screens.SplashScreen
 import com.example.pawfect_mobile.ui.screens.home.HomeScreen
@@ -17,10 +18,12 @@ import com.example.pawfect_mobile.ui.screens.profile.ProfileScreen
 import com.example.pawfect_mobile.ui.screens.register.RegisterScreen
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import kotlinx.serialization.Serializable
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+    val activity = LocalActivity.current
 
     LaunchedEffect("logout") {
         Firebase.auth.addAuthStateListener {
@@ -85,7 +88,11 @@ fun AppNavigation() {
                     navController.navigate(ProfileRoute)
                 },
                 onSearchClick = {},
-                onPetClick = {}
+                onPetClick = {
+                    val intent = Intent(activity, PetProfileActivity::class.java)
+                    intent.putExtra("PET_ID", it)
+                    activity?.startActivity(intent)
+                }
             )
         }
         composable<ProfileRoute> {
@@ -98,4 +105,5 @@ fun AppNavigation() {
     }
 }
 
-@Serializable object ProfileRoute
+@Serializable
+object ProfileRoute

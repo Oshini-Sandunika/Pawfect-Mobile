@@ -28,7 +28,7 @@ import com.example.pawfect_mobile.data.models.Pet
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun PetCard(pet: Pet) {
+fun PetCard(pet: Pet, onPetClick: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,7 +70,7 @@ fun PetCard(pet: Pet) {
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    TextButton({}) {
+                    TextButton({ onPetClick(pet.id) }) {
                         Text("More Info")
                     }
                 }

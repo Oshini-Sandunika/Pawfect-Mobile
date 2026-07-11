@@ -102,7 +102,7 @@ fun HomeScreen(
 
                         ) {
                             state.featuredPets.forEach { pet ->
-                                PetCard(pet = pet)
+                                PetCard(pet = pet, onPetClick)
                             }
                         }
                     }
