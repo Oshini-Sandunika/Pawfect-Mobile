@@ -10,18 +10,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Calculate
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,21 +40,12 @@ fun ActionCard(modifier: Modifier = Modifier) {
 
     Card(
         modifier = modifier,
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(4.dp),
         colors = CardDefaults.cardColors(containerColor = androidx.compose.ui.graphics.Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            // Mock Search Bar
-            OutlinedTextField(
-                value = "",
-                onValueChange = {},
-                modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("Search for pets...") },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },
-                shape = RoundedCornerShape(24.dp),
-            )
-
+            Search()
             Spacer(modifier = Modifier.height(16.dp))
 
             // Tool Links
@@ -67,14 +55,14 @@ fun ActionCard(modifier: Modifier = Modifier) {
             ) {
                 ToolItem(
                     icon = Icons.Default.Favorite,
-                    label = "Find Pet",
+                    label = "Pet Quiz",
                     onClick = {
                         context.startActivity(Intent(context, FindPerfectPetActivity::class.java))
                     }
                 )
                 ToolItem(
                     icon = Icons.Default.DateRange,
-                    label = "Age Calc",
+                    label = "Age Calculator",
                     onClick = {
                         context.startActivity(
                             Intent(
@@ -98,7 +86,7 @@ fun ActionCard(modifier: Modifier = Modifier) {
                 )
                 ToolItem(
                     icon = Icons.Default.Calculate,
-                    label = "Cost",
+                    label = "Cost Estimator",
                     onClick = {
                         context.startActivity(Intent(context, AdoptionCostActivity::class.java))
                     }
@@ -121,7 +109,7 @@ private fun ToolItem(
             .padding(4.dp)
     ) {
         Surface(
-            shape = CircleShape,
+            shape = RoundedCornerShape(10.dp),
             color = MaterialTheme.colorScheme.primaryContainer,
             modifier = Modifier.size(56.dp)
         ) {

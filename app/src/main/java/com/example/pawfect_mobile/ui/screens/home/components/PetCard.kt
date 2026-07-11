@@ -14,6 +14,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -24,12 +25,10 @@ import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.pawfect_mobile.data.models.Pet
-import java.util.logging.Logger
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun PetCard(pet: Pet) {
-    Logger.getLogger("A").info("${pet.name}")
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -49,21 +48,21 @@ fun PetCard(pet: Pet) {
             )
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = pet.name ?: "Unknown",
+                    text = pet.name,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = pet.breed ?: "Unknown",
+                    text = pet.breed,
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = pet.description ?: "Unknown",
+                    text = pet.description,
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 2,
@@ -71,12 +70,9 @@ fun PetCard(pet: Pet) {
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    Text(
-                        text = "$${pet.adoptionFee}",
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                    TextButton({}) {
+                        Text("More Info")
+                    }
                 }
 
             }
