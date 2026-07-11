@@ -13,3 +13,4 @@ Thumbs.db
 .cxx/
 
 app/google-services.json
+app/src/google-services.json

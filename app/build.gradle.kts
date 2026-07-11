@@ -1,6 +1,12 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.compose.compiler)
+}
+
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+    stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
 }
 
 android {
@@ -19,6 +25,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        compose = true
     }
 
     buildTypes {
@@ -41,17 +51,28 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.constraintlayout)
     implementation(libs.material)
+    implementation(libs.ui.text.google.fonts)
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
-    implementation("androidx.cardview:cardview:1.0.0")
-    implementation("com.google.ai.edge.litert:litert:2.1.0")
+    implementation(libs.cardview)
+    implementation(libs.litert)
+    compileOnly (libs.lombok)
+    annotationProcessor (libs.lombok)
 
     // Firebase BOM and Services
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.database)
     implementation(libs.firebase.storage)
+
+    // Jetpack compose
+    val composeBom = platform("androidx.compose:compose-bom:2026.06.00")
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+    implementation(libs.material3)
+    implementation(libs.ui.tooling.preview)
+    debugImplementation(libs.ui.tooling)
 
     // Glide for image loading
     implementation(libs.glide)
