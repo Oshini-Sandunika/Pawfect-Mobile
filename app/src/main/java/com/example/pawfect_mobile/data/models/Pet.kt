@@ -13,5 +13,7 @@ class Pet(
     var featured: Boolean = false,
     var adoptionFee: Double = 0.0,
     var monthlyCost: Double = 0.0,
+    var shelterId: String = "",
+    @Transient var shelter: Shelter? = null
 ) : Serializable {
 }
