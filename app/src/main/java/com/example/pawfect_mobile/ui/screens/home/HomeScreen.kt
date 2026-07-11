@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
@@ -50,53 +51,64 @@ fun HomeScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(300.dp)
+                    .height(420.dp)
             ) {
                 ImageCarousel()
 
-                HomeTopBar(state.currentUser?.fullName, onProfileClick)
+                HomeTopBar(
+                    state.currentUser?.fullName, onProfileClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 32.dp)
+                        .safeContentPadding()
+                )
             }
 
-            // Tools Card with Search
-            ActionCard(
-                onSearchClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .offset(y = (-42).dp)
-            )
 
             // Featured Pets Section
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .offset(y = (-36).dp)
+                    .offset(y = (-120).dp)
             ) {
-                Text(
-                    text = stringResource(R.string.featured_pets),
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 12.dp)
+                // Tools Card with Search
+                ActionCard(
+                    onSearchClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
                 )
 
-                if (state.isLoadingPets) {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-                } else if (state.petsError != null) {
-                    Text(text = state.petsError!!, color = MaterialTheme.colorScheme.error)
-                } else if (state.featuredPets.isEmpty()) {
-                    Text(text = "No featured pets at the moment.")
-                } else {
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        state.featuredPets.forEach { pet ->
-                            PetCard(pet = pet)
+                Column(
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                ) {
+
+                    Text(
+                        text = stringResource(R.string.featured_pets),
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(bottom = 12.dp)
+                    )
+
+                    if (state.isLoadingPets) {
+                        CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+                    } else if (state.petsError != null) {
+                        Text(text = state.petsError!!, color = MaterialTheme.colorScheme.error)
+                    } else if (state.featuredPets.isEmpty()) {
+                        Text(text = "No featured pets at the moment.")
+                    } else {
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(4.dp)
+
+                        ) {
+                            state.featuredPets.forEach { pet ->
+                                PetCard(pet = pet)
+                            }
                         }
                     }
                 }
-            }
 
+            }
             Spacer(modifier = Modifier.height(32.dp))
         }
     }

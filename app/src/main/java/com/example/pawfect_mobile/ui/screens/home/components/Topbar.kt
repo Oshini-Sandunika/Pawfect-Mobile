@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -24,11 +23,13 @@ import androidx.compose.ui.unit.sp
 import com.example.pawfect_mobile.R
 
 @Composable
-fun HomeTopBar(name: String?, onProfileClick: () -> Unit) {
+fun HomeTopBar(
+    name: String?,
+    onProfileClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp, top = 12.dp),
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

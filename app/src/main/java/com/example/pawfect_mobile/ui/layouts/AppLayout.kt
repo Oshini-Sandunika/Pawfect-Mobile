@@ -2,6 +2,7 @@ package com.example.pawfect_mobile.ui.layouts
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -24,7 +25,7 @@ fun AppLayout(
             content = {
                 Box(
                     content = content,
-                    modifier = Modifier.padding(it)
+                    modifier = Modifier.consumeWindowInsets(it)
                 )
             }
         )
