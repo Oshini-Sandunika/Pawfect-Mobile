@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pawfect_mobile.ui.components.ErrorCard
-import com.example.pawfect_mobile.ui.components.Loading
+import com.example.pawfect_mobile.ui.components.LoadingCard
 import com.example.pawfect_mobile.ui.components.PetCard
 import com.example.pawfect_mobile.ui.components.StyledTopBar
 import com.example.pawfect_mobile.ui.layouts.AppLayout
@@ -58,7 +58,7 @@ fun SearchScreen(
             ) {
                 item { Spacer(modifier = Modifier.height(16.dp)) }
                 if (state.isLoading) {
-                    item { Loading() }
+                    item { LoadingCard() }
                 } else if (!state.hasSearched) {
                     item { NoSearch() }
                 } else if (state.error != null) {

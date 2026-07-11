@@ -10,13 +10,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -24,11 +21,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pawfect_mobile.R
+import com.example.pawfect_mobile.ui.components.ErrorCard
+import com.example.pawfect_mobile.ui.components.LoadingCard
+import com.example.pawfect_mobile.ui.components.PetCard
 import com.example.pawfect_mobile.ui.layouts.AppLayout
 import com.example.pawfect_mobile.ui.screens.home.components.ActionCard
 import com.example.pawfect_mobile.ui.screens.home.components.HomeTopBar
 import com.example.pawfect_mobile.ui.screens.home.components.ImageCarousel
-import com.example.pawfect_mobile.ui.components.PetCard
+import com.example.pawfect_mobile.ui.screens.home.components.NoFeatured
 
 @Composable
 fun HomeScreen(
@@ -88,15 +88,14 @@ fun HomeScreen(
                     )
 
                     if (state.isLoadingPets) {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+                        LoadingCard()
                     } else if (state.petsError != null) {
-                        Text(text = state.petsError!!, color = MaterialTheme.colorScheme.error)
+                        ErrorCard(error = state.petsError!!)
                     } else if (state.featuredPets.isEmpty()) {
-                        Text(text = "No featured pets at the moment.")
+                        NoFeatured()
                     } else {
                         Column(
                             verticalArrangement = Arrangement.spacedBy(4.dp)
-
                         ) {
                             state.featuredPets.forEach { pet ->
                                 PetCard(pet = pet, onPetClick)
