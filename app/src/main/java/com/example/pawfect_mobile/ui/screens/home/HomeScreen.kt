@@ -19,10 +19,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pawfect_mobile.R
 import com.example.pawfect_mobile.ui.layouts.AppLayout
 import com.example.pawfect_mobile.ui.screens.home.components.ActionCard
 import com.example.pawfect_mobile.ui.screens.home.components.HomeTopBar
@@ -30,7 +32,12 @@ import com.example.pawfect_mobile.ui.screens.home.components.ImageCarousel
 import com.example.pawfect_mobile.ui.screens.home.components.PetCard
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
+fun HomeScreen(
+    viewModel: HomeViewModel = viewModel(),
+    onProfileClick: () -> Unit,
+    onPetClick: (id: String) -> Unit,
+    onSearchClick: () -> Unit
+) {
     val state by viewModel.state.collectAsState()
 
     AppLayout {
@@ -47,11 +54,12 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
             ) {
                 ImageCarousel()
 
-                HomeTopBar()
+                HomeTopBar(state.currentUser?.fullName, onProfileClick)
             }
 
             // Tools Card with Search
             ActionCard(
+                onSearchClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
@@ -66,7 +74,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
                     .offset(y = (-36).dp)
             ) {
                 Text(
-                    text = "Featured Pets",
+                    text = stringResource(R.string.featured_pets),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 12.dp)

@@ -77,7 +77,7 @@ fun AppNavigation() {
             )
         }
         composable<HomeRoute> {
-            HomeScreen()
+            HomeScreen(onProfileClick = {}, onSearchClick = {}, onPetClick = {})
         }
     }
 }

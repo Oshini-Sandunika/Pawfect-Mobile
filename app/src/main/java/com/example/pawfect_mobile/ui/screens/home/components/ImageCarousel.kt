@@ -16,16 +16,32 @@ import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import kotlinx.coroutines.delay
+import java.lang.Math.random
 import kotlin.time.Duration.Companion.milliseconds
+
+val imageList = arrayOf(
+    "1534361960057-19889db9621e",
+    "1543466835-00a7907e9de1",
+    "1514888286974-6c03e2ca1dba",
+    "1548199973-03cce0bbc87b",
+    "1587300003388-59208cc962cb",
+    "1472491235688-bdc81a63246e",
+    "1511044568932-338cba0ad803",
+    "1560114928-40f1f1eb26a0"
+)
+
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ImageCarousel() {
-    val carouselImages = listOf(
-        "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=1000&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=1000&auto=format&fit=crop",
-    )
-    val pagerState = rememberPagerState(pageCount = { carouselImages.size })
+    val carouselImages =
+        imageList.map { "https://images.unsplash.com/photo-${it}?q=80&w=1000&auto=format&fit=crop" }
+
+    val pagerState =
+        rememberPagerState(
+            pageCount = { carouselImages.size },
+            initialPage = (random() * carouselImages.size).toInt()
+        )
 
     LaunchedEffect(Unit) {
         while (true) {

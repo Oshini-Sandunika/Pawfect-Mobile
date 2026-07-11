@@ -35,7 +35,7 @@ import com.example.pawfect_mobile.HumanYearConverterActivity
 import com.example.pawfect_mobile.MonthlyCareBudgetActivity
 
 @Composable
-fun ActionCard(modifier: Modifier = Modifier) {
+fun ActionCard(onSearchClick: () -> Unit, modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
     Card(
@@ -49,6 +49,7 @@ fun ActionCard(modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(16.dp))
 
             // Tool Links
+            Text("Tools")
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -109,7 +110,7 @@ private fun ToolItem(
             .padding(4.dp)
     ) {
         Surface(
-            shape = RoundedCornerShape(10.dp),
+            shape = RoundedCornerShape(20.dp),
             color = MaterialTheme.colorScheme.primaryContainer,
             modifier = Modifier.size(56.dp)
         ) {
@@ -117,7 +118,7 @@ private fun ToolItem(
                 imageVector = icon,
                 contentDescription = label,
                 tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(12.dp)
             )
         }
         Spacer(modifier = Modifier.height(4.dp))
