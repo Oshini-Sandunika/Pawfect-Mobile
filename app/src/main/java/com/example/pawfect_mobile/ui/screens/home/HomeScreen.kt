@@ -41,7 +41,7 @@ fun HomeScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
-    AppLayout {
+    AppLayout(noInset = true) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
