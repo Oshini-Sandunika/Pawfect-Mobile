@@ -10,3 +10,6 @@ object RegisterRoute
 
 @Serializable
 object HomeRoute
+
+@Serializable
+object SplashRoute
