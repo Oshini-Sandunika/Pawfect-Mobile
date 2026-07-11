@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FA"
+    android:background="#FAF7F2"
     tools:context=".PetProfileActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -18,7 +18,7 @@
             android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
+            app:contentScrim="#5B3A2E"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="false">
 
@@ -70,7 +70,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Pet Name"
-                        android:textColor="#2D3142"
+                        android:textColor="#3E2723"
                         android:textSize="28sp"
                         android:textStyle="bold" />
 
@@ -80,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="Breed • Species"
-                        android:textColor="#9094A6"
+                        android:textColor="#8A746A"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -89,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$0/mo"
-                    android:textColor="#FF6B6B"
+                    android:textColor="#5B3A2E"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -109,7 +109,7 @@
                     android:layout_marginEnd="8dp"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
-                    app:cardBackgroundColor="#EAF0FF">
+                    app:cardBackgroundColor="#EFEAE6">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Age"
-                            android:textColor="#4A5568"
+                            android:textColor="#4E342E"
                             android:textSize="14sp"/>
                         <TextView
                             android:id="@+id/petAgeTextView"
@@ -128,13 +128,13 @@
                             android:layout_height="wrap_content"
                             android:text="2 yrs"
                             android:layout_marginTop="4dp"
-                            android:textColor="#2D3142"
+                            android:textColor="#3E2723"
                             android:textSize="16sp"
                             android:textStyle="bold"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 
-                <!-- Status Card (Dummy) -->
+                <!-- Status Card -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
                     android:layout_marginStart="8dp"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
-                    app:cardBackgroundColor="#E6FFFA">
+                    app:cardBackgroundColor="#EFEAE6">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -153,14 +153,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Status"
-                            android:textColor="#4A5568"
+                            android:textColor="#4E342E"
                             android:textSize="14sp"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Available"
                             android:layout_marginTop="4dp"
-                            android:textColor="#319795"
+                            android:textColor="#3E2723"
                             android:textSize="16sp"
                             android:textStyle="bold"/>
                     </LinearLayout>
@@ -172,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:text="About me"
-                android:textColor="#2D3142"
+                android:textColor="#3E2723"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -182,7 +182,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="Description goes here..."
-                android:textColor="#718096"
+                android:textColor="#5F5F66"
                 android:lineSpacingExtra="6dp"
                 android:textSize="16sp" />
 
@@ -196,8 +196,8 @@
                 android:textAllCaps="false"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:cornerRadius="30dp"
-                android:backgroundTint="#FF6B6B"
+                android:background="@drawable/brown_rounded_button"
+                app:backgroundTint="@null"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>

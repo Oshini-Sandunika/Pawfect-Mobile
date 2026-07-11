@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F8F9FA"
+    android:background="#FAF7F2"
     tools:context=".AdoptionRequestActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -14,7 +14,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@android:color/white"
         app:title="Adoption Request"
-        app:titleTextColor="#2D3142" />
+        app:titleTextColor="#3E2723" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Applicant Details"
-                android:textColor="#2D3142"
+                android:textColor="#3E2723"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="24dp" />
@@ -127,8 +127,8 @@
                 android:textAllCaps="false"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:cornerRadius="30dp"
-                android:backgroundTint="#FF6B6B"
+                android:background="@drawable/brown_rounded_button"
+                app:backgroundTint="@null"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
