@@ -16,6 +16,7 @@ import com.example.pawfect_mobile.ui.screens.home.HomeScreen
 import com.example.pawfect_mobile.ui.screens.login.LoginScreen
 import com.example.pawfect_mobile.ui.screens.profile.ProfileScreen
 import com.example.pawfect_mobile.ui.screens.register.RegisterScreen
+import com.example.pawfect_mobile.ui.screens.search.SearchScreen
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import kotlinx.serialization.Serializable
@@ -87,7 +88,9 @@ fun AppNavigation() {
                 onProfileClick = {
                     navController.navigate(ProfileRoute)
                 },
-                onSearchClick = {},
+                onSearchClick = {
+                    navController.navigate(SearchRoute)
+                },
                 onPetClick = {
                     val intent = Intent(activity, PetProfileActivity::class.java)
                     intent.putExtra("PET_ID", it)
@@ -102,8 +105,23 @@ fun AppNavigation() {
                 }
             )
         }
+        composable<SearchRoute> {
+            SearchScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                onPetClick = {
+                    val intent = Intent(activity, PetProfileActivity::class.java)
+                    intent.putExtra("PET_ID", it)
+                    activity?.startActivity(intent)
+                }
+            )
+        }
     }
 }
 
 @Serializable
 object ProfileRoute
+
+@Serializable
+object SearchRoute

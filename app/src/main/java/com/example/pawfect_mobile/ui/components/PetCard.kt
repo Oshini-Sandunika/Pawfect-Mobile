@@ -1,4 +1,4 @@
-package com.example.pawfect_mobile.ui.screens.home.components
+package com.example.pawfect_mobile.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,13 +24,16 @@ import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.pawfect_mobile.data.models.Pet
-import com.example.pawfect_mobile.ui.components.StyledCard
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun PetCard(pet: Pet, onPetClick: (String) -> Unit) {
+fun PetCard(
+    pet: Pet,
+    onPetClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     StyledCard(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(140.dp),
         shape = RoundedCornerShape(4.dp),

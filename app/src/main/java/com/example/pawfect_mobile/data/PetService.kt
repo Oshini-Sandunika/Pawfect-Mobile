@@ -41,6 +41,42 @@ object PetService {
             }
     }
 
+    suspend fun searchPets(query: String, type: String?): List<Pet> {
+        val querySnapshot = if (!type.isNullOrBlank() && type != "All") {
+            Firebase.firestore.collection("pets")
+                .whereEqualTo("species", type)
+                .get()
+                .await()
+        } else {
+            Firebase.firestore.collection("pets")
+                .get()
+                .await()
+        }
+
+        var allFetched = querySnapshot.documents.mapNotNull { it.toObject(Pet::class.java) }
+
+        if (allFetched.isEmpty()) {
+            allFetched = mutableListOf()
+            repeat(10) { allFetched.addAll(getPlaceholderPets()) }
+            allFetched.shuffle()
+
+            if (!type.isNullOrBlank() && type != "All") {
+                allFetched = allFetched.filter { it.species.equals(type, ignoreCase = true) }
+            }
+        }
+
+        return if (query.isBlank()) {
+            allFetched
+        } else {
+            val q = query.lowercase()
+            allFetched.filter {
+                it.name.lowercase().contains(q) ||
+                        it.breed.lowercase().contains(q) ||
+                        it.description.lowercase().contains(q)
+            }
+        }
+    }
+
     private fun getPlaceholderPets(): List<Pet> {
         return listOf(
             Pet(

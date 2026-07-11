@@ -28,7 +28,7 @@ import com.example.pawfect_mobile.ui.layouts.AppLayout
 import com.example.pawfect_mobile.ui.screens.home.components.ActionCard
 import com.example.pawfect_mobile.ui.screens.home.components.HomeTopBar
 import com.example.pawfect_mobile.ui.screens.home.components.ImageCarousel
-import com.example.pawfect_mobile.ui.screens.home.components.PetCard
+import com.example.pawfect_mobile.ui.components.PetCard
 
 @Composable
 fun HomeScreen(
