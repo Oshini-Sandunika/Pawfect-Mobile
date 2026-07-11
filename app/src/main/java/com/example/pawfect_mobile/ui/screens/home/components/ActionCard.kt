@@ -15,8 +15,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Calculate
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -33,16 +31,15 @@ import com.example.pawfect_mobile.AdoptionCostActivity
 import com.example.pawfect_mobile.FindPerfectPetActivity
 import com.example.pawfect_mobile.HumanYearConverterActivity
 import com.example.pawfect_mobile.MonthlyCareBudgetActivity
+import com.example.pawfect_mobile.ui.components.StyledCard
 
 @Composable
 fun ActionCard(onSearchClick: () -> Unit, modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
-    Card(
+    StyledCard(
         modifier = modifier,
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = androidx.compose.ui.graphics.Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        shape = RoundedCornerShape(16.dp),
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Search(onSearchClick)

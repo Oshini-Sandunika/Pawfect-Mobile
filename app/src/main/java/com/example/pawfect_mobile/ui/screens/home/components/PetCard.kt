@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,16 +24,16 @@ import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.pawfect_mobile.data.models.Pet
+import com.example.pawfect_mobile.ui.components.StyledCard
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun PetCard(pet: Pet, onPetClick: (String) -> Unit) {
-    Card(
+    StyledCard(
         modifier = Modifier
             .fillMaxWidth()
             .height(140.dp),
         shape = RoundedCornerShape(4.dp),
-        colors = CardDefaults.cardColors(containerColor = androidx.compose.ui.graphics.Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row {

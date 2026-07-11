@@ -57,7 +57,7 @@ fun ImageCarousel() {
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.fillMaxSize(),
-            userScrollEnabled = false
+            userScrollEnabled = false,
         ) { page ->
             GlideImage(
                 model = carouselImages[page],

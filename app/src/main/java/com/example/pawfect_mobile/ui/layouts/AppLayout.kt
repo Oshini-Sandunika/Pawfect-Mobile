@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -23,6 +25,8 @@ import com.example.pawfect_mobile.ui.theme.AppTheme
 
 @Composable
 fun AppLayout(
+    bgAlpha: Float = 0.12f,
+    noScroll: Boolean = false,
     noInset: Boolean = false,
     topBar: @Composable (() -> Unit) = {},
     content: @Composable (BoxScope.() -> Unit),
@@ -40,6 +44,14 @@ fun AppLayout(
     ) {
     }
 
+    var contentModifier = Modifier
+        .fillMaxSize()
+        .background(brush, alpha = bgAlpha)
+
+    if (!noScroll) {
+        contentModifier = contentModifier.verticalScroll(rememberScrollState())
+    }
+
     AppTheme {
         Scaffold(
             snackbarHost = { SnackbarHost(snackState) },
@@ -48,12 +60,10 @@ fun AppLayout(
                 Box(
                     content = content,
                     modifier = if (noInset) {
-                        Modifier.consumeWindowInsets(it)
+                        contentModifier.consumeWindowInsets(it)
                     } else {
-                        Modifier.padding(it)
+                        contentModifier.padding(it)
                     }
-                        .background(brush, alpha = 0.15f)
-                        .fillMaxSize()
                 )
             }
         )
@@ -64,5 +74,5 @@ fun AppLayout(
 @Preview
 @Composable
 fun AppLayoutTest() {
-    AppLayout { }
+    AppLayout(content = { })
 }
