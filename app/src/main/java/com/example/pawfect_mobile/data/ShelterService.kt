@@ -17,15 +17,17 @@ object ShelterService {
     }
 
     suspend fun attachShelters(pets: List<Pet>): List<Pet> {
-        val shelterMap = mutableMapOf<String, Shelter>()
+        val shelterMap = mutableMapOf<String, Shelter?>()
         for (pet in pets) {
             val sId = pet.shelterId
+            
             if (!shelterMap.containsKey(sId)) {
-                val shelter = getShelterById(sId)
-                if (shelter != null) shelterMap[sId] = shelter
+                shelterMap[sId] = getShelterById(sId)
             }
+
+            pet.shelter = shelterMap[sId]
         }
-       
+
         return pets
     }
 

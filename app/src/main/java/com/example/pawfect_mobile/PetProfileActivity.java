@@ -1,6 +1,5 @@
 package com.example.pawfect_mobile;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,15 +8,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.pawfect_mobile.data.PetService;
+import com.example.pawfect_mobile.data.dto.ShelterInquiryDTO;
 import com.example.pawfect_mobile.data.models.Pet;
+import com.example.pawfect_mobile.data.models.Shelter;
 
 import java.util.Locale;
 
-public class PetProfileActivity extends AppCompatActivity {
+public class PetProfileActivity extends FragmentActivity {
 
     private ImageView petImageView;
     private TextView petNameTextView;
@@ -86,19 +87,22 @@ public class PetProfileActivity extends AppCompatActivity {
 
     private void loadPetData() {
         PetService.INSTANCE.getPetByIdCB(petId, pet -> {
-            if (pet == null) {
-                Toast.makeText(
-                        PetProfileActivity.this,
-                        "Pet details were not found",
-                        Toast.LENGTH_SHORT
-                ).show();
+            runOnUiThread(() -> {
+                if (pet == null) {
+                    Toast.makeText(
+                            PetProfileActivity.this,
+                            "Pet details were not found",
+                            Toast.LENGTH_SHORT
+                    ).show();
 
-                finish();
-            }
+                    finish();
+                    return;
+                }
 
-            currentPet = pet;
-            updateUI();
-            btnAdoptMe.setEnabled(true);
+                currentPet = pet;
+                updateUI();
+                btnAdoptMe.setEnabled(true);
+            });
             return kotlin.Unit.INSTANCE;
         });
     }
@@ -148,17 +152,15 @@ public class PetProfileActivity extends AppCompatActivity {
 
         if (currentPet.getShelter() != null) {
             shelterSection.setVisibility(View.VISIBLE);
-            shelterSection.setOnClickListener(v -> {
-                Toast.makeText(this, "Opening shelter details...", Toast.LENGTH_SHORT).show();
-            });
-            com.example.pawfect_mobile.data.models.Shelter s = currentPet.getShelter();
+
+            Shelter s = currentPet.getShelter();
             shelterNameTextView.setText(getSafeText(s.getName(), "Unknown Shelter"));
             shelterAddressTextView.setText(getSafeText(s.getAddress(), "Unknown Address"));
             shelterPhoneTextView.setText("Phone: " + getSafeText(s.getPhone(), "N/A"));
             shelterEmailTextView.setText("Email: " + getSafeText(s.getEmail(), "N/A"));
 
             String logoUrl = s.getLogo();
-            if (logoUrl != null && !logoUrl.trim().isEmpty()) {
+            if (!logoUrl.trim().isEmpty()) {
                 Glide.with(this)
                         .load(logoUrl)
                         .placeholder(android.R.color.darker_gray)
@@ -185,7 +187,7 @@ public class PetProfileActivity extends AppCompatActivity {
     }
 
     private void openAdoptionRequest() {
-        if (currentPet == null) {
+        if (currentPet == null || currentPet.getShelter() == null) {
             Toast.makeText(
                     this,
                     "Pet data is still loading",
@@ -195,20 +197,10 @@ public class PetProfileActivity extends AppCompatActivity {
             return;
         }
 
-        Intent intent = new Intent(
-                PetProfileActivity.this,
-                AdoptionRequestActivity.class
-        );
-
-        // Use the Firebase child key
-        intent.putExtra("PET_ID", petId);
-
-        intent.putExtra(
-                "PET_NAME",
-                getSafeText(currentPet.getName(), "Unknown Pet")
-        );
-
-        startActivity(intent);
+        Shelter s = currentPet.getShelter();
+        ShelterInquiryDTO dto = new ShelterInquiryDTO(petId, s);
+        AdoptionRequestDialog dialog = AdoptionRequestDialog.newInstance(dto);
+        dialog.show(getSupportFragmentManager(), "ShelterInquiryDialog");
     }
 
     private String getSafeText(String value, String fallback) {

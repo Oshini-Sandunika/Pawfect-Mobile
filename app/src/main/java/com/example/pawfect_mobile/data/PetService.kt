@@ -1,5 +1,6 @@
 package com.example.pawfect_mobile.data
 
+import android.util.Log
 import com.example.pawfect_mobile.data.models.Pet
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
@@ -7,7 +8,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.future.future
 import kotlinx.coroutines.tasks.await
-import java.util.logging.Logger
 
 object PetService {
 
@@ -31,11 +31,8 @@ object PetService {
             .document(id)
             .get().await()
 
-        val pet: Pet? = if (snapshot.exists()) {
-            snapshot.toObject(Pet::class.java)
-        } else {
-            getPlaceholderPets().find { it.id == id }
-        }
+        val pet =
+            snapshot.toObject(Pet::class.java) ?: getPlaceholderPets().find { it.id == id }
 
         if (pet != null) {
             pet.shelter = ShelterService.getShelterById(id)
@@ -50,7 +47,7 @@ object PetService {
         }
         result.thenAccept(onResult)
             .exceptionally {
-                Logger.getLogger("PetService").warning("Failed to fetch pet: $it");
+                Log.e("PetService", "Failed to fetch pet", it)
                 onResult(null)
                 null
             }
@@ -83,7 +80,7 @@ object PetService {
 
         if (!query.isBlank()) {
             val q = query.lowercase()
-            allFetched.filter {
+            allFetched = allFetched.filter {
                 it.name.lowercase().contains(q) ||
                         it.breed.lowercase().contains(q) ||
                         it.description.lowercase().contains(q)

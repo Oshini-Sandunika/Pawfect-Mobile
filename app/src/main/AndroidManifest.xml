@@ -26,7 +26,6 @@
         <activity android:name=".HumanYearConverterActivity" />
         <activity android:name=".FindPerfectPetActivity" />
         <activity android:name=".PetProfileActivity" />
-        <activity android:name=".AdoptionRequestActivity" />
     </application>
 
 </manifest>
