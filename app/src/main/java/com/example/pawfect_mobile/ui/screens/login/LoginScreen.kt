@@ -42,6 +42,7 @@ fun LoginScreen(
             onValueChange = viewModel::updateEmail,
             inputType = InputType.EMAIL,
             required = true,
+            enabled = !state.isLoading
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextInput(
@@ -50,6 +51,7 @@ fun LoginScreen(
             onValueChange = viewModel::updatePassword,
             inputType = InputType.PASSWORD,
             required = true,
+            enabled = !state.isLoading
         )
 
         if (state.loginError != null) {

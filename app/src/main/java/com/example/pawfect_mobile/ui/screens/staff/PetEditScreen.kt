@@ -72,22 +72,26 @@ fun PetEditScreen(
                     TextInput(
                         label = "Name",
                         value = Input.Valid(pet.name),
-                        onValueChange = { viewModel.updateField(name = it.string()) }
+                        onValueChange = { viewModel.updateField(name = it.string()) },
+                        enabled = !state.isSaving
                     )
                     TextInput(
                         label = "Species",
                         value = Input.Valid(pet.species),
-                        onValueChange = { viewModel.updateField(species = it.string()) }
+                        onValueChange = { viewModel.updateField(species = it.string()) },
+                        enabled = !state.isSaving
                     )
                     TextInput(
                         label = "Breed",
                         value = Input.Valid(pet.breed),
-                        onValueChange = { viewModel.updateField(breed = it.string()) }
+                        onValueChange = { viewModel.updateField(breed = it.string()) },
+                        enabled = !state.isSaving
                     )
                     TextInput(
                         label = "Age",
                         value = Input.Valid(pet.age),
-                        onValueChange = { viewModel.updateField(age = it.string()) }
+                        onValueChange = { viewModel.updateField(age = it.string()) },
+                        enabled = !state.isSaving
                     )
                     TextInput(
                         label = "Adoption Fee",
@@ -96,7 +100,8 @@ fun PetEditScreen(
                             viewModel.updateField(
                                 adoptionFee = it.string().toDoubleOrNull() ?: 0.0
                             )
-                        }
+                        },
+                        enabled = !state.isSaving
                     )
                     TextInput(
                         label = "Monthly Cost",
@@ -105,13 +110,15 @@ fun PetEditScreen(
                             viewModel.updateField(
                                 monthlyCost = it.string().toDoubleOrNull() ?: 0.0
                             )
-                        }
+                        },
+                        enabled = !state.isSaving
                     )
                     TextInput(
                         label = "Description",
                         value = Input.Valid(pet.description),
                         lines = 4,
-                        onValueChange = { viewModel.updateField(description = it.string()) }
+                        onValueChange = { viewModel.updateField(description = it.string()) },
+                        enabled = !state.isSaving
                     )
 
                     val context = androidx.compose.ui.platform.LocalContext.current
@@ -119,7 +126,8 @@ fun PetEditScreen(
                     ImageInput(
                         value = state.imageInput,
                         onValueChange = { viewModel.updateImageInput(it) },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = !state.isSaving
                     )
 
                     Row(

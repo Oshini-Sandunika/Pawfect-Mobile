@@ -41,7 +41,8 @@ fun AccountDetailsSection(
             value = fullName,
             onValueChange = onFullNameChange,
             inputType = InputType.TEXT,
-            required = true
+            required = true,
+            enabled = !isLoading
         )
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -50,7 +51,8 @@ fun AccountDetailsSection(
             value = phone,
             onValueChange = onPhoneChange,
             inputType = InputType.PHONE,
-            required = false
+            required = false,
+            enabled = !isLoading
         )
         Spacer(modifier = Modifier.height(16.dp))
 

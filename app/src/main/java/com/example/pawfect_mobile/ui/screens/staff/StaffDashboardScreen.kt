@@ -3,7 +3,6 @@ package com.example.pawfect_mobile.ui.screens.staff
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -33,6 +32,10 @@ fun StaffDashboardScreen(
     val state by viewModel.state.collectAsState()
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf("Pets", "Shelter", "Inquiries")
+
+    androidx.compose.runtime.LaunchedEffect(Unit) {
+        viewModel.loadData()
+    }
 
     AppLayout(
         topBar = {

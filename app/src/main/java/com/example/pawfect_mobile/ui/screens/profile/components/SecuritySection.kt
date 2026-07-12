@@ -41,7 +41,8 @@ fun SecuritySection(
             value = newPassword,
             onValueChange = onPasswordChange,
             inputType = InputType.PASSWORD,
-            required = true
+            required = true,
+            enabled = !isLoading
         )
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -53,7 +54,8 @@ fun SecuritySection(
             required = true,
             validator = { input ->
                 if (input != newPassword.string()) "Passwords do not match" else null
-            }
+            },
+            enabled = !isLoading
         )
         Spacer(modifier = Modifier.height(16.dp))
         Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {

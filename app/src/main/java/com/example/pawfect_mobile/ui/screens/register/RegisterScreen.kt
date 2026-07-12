@@ -42,6 +42,7 @@ fun RegisterScreen(
             onValueChange = viewModel::updateFullName,
             inputType = InputType.TEXT,
             required = true,
+            enabled = !state.isLoading
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextInput(
@@ -50,6 +51,7 @@ fun RegisterScreen(
             onValueChange = viewModel::updateEmail,
             inputType = InputType.EMAIL,
             required = true,
+            enabled = !state.isLoading
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextInput(
@@ -58,6 +60,7 @@ fun RegisterScreen(
             onValueChange = viewModel::updatePhone,
             inputType = InputType.PHONE,
             required = true,
+            enabled = !state.isLoading
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextInput(
@@ -66,6 +69,7 @@ fun RegisterScreen(
             onValueChange = viewModel::updatePassword,
             inputType = InputType.PASSWORD,
             required = true,
+            enabled = !state.isLoading
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextInput(
@@ -78,7 +82,8 @@ fun RegisterScreen(
                 if (it.isBlank()) "Please confirm your password"
                 else if (it != state.password.string()) "Passwords do not match"
                 else null
-            }
+            },
+            enabled = !state.isLoading
         )
 
         if (state.registerError != null) {

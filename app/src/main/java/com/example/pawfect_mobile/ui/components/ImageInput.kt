@@ -25,7 +25,6 @@ import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -51,7 +50,8 @@ fun ImageInput(
     value: ImageInputValue,
     onValueChange: (ImageInputValue) -> Unit,
     modifier: Modifier = Modifier,
-    label: String = "Image"
+    label: String = "Image",
+    enabled: Boolean = true
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
@@ -82,7 +82,7 @@ fun ImageInput(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { showDialog = true }
+                    .clickable(enabled = enabled) { showDialog = true }
                     .padding(16.dp),
                 contentAlignment = Alignment.Center
             ) {
@@ -105,7 +105,7 @@ fun ImageInput(
                                 .size(28.dp)
                                 .shadow(4.dp, CircleShape)
                                 .background(MaterialTheme.colorScheme.surface, CircleShape)
-                                .clickable { onValueChange(ImageInputValue.Empty) },
+                                .clickable(enabled = enabled) { onValueChange(ImageInputValue.Empty) },
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(

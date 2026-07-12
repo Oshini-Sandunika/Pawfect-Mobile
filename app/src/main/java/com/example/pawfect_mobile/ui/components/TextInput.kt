@@ -30,9 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.example.pawfect_mobile.ui.theme.AppTheme
 
 enum class InputType {
-    TEXT {
-
-    },
+    TEXT,
     EMAIL {
         override val keyboardType: KeyboardOptions =
             KeyboardOptions(keyboardType = KeyboardType.Email)
@@ -66,7 +64,7 @@ enum class InputType {
     };
 
     open val keyboardType: KeyboardOptions get() = KeyboardOptions.Default
-    open val visualTransformation: VisualTransformation = VisualTransformation.None;
+    open val visualTransformation: VisualTransformation = VisualTransformation.None
 
     open fun validate(input: String): String? {
         return null
@@ -99,6 +97,7 @@ fun TextInput(
     required: Boolean = false,
     description: String = "",
     lines: Int = 1,
+    enabled: Boolean = true,
     validator: ((String) -> String?)? = null
 ) {
     var hasFocus by remember { mutableStateOf(false) }
@@ -129,7 +128,7 @@ fun TextInput(
         OutlinedTextField(
             value = value.string(),
             onValueChange = {
-                var err: String?;
+                var err: String?
                 if (it.isEmpty() && required) {
                     err = "$label cannot be empty"
                 } else {
@@ -159,6 +158,7 @@ fun TextInput(
             singleLine = lines == 1,
             minLines = lines,
             maxLines = lines,
+            enabled = enabled,
             visualTransformation = inputType.visualTransformation,
             keyboardOptions = inputType.keyboardType,
             trailingIcon = {
