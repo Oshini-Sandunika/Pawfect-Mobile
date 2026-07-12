@@ -1,6 +1,7 @@
 package com.example.pawfect_mobile.ui.screens.home.components
 
 import android.content.Intent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,9 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Calculate
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.twotone.Calculate
+import androidx.compose.material.icons.twotone.CalendarMonth
+import androidx.compose.material.icons.twotone.Payments
+import androidx.compose.material.icons.twotone.Quiz
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -52,14 +54,14 @@ fun ActionCard(onSearchClick: () -> Unit, modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 ToolItem(
-                    icon = Icons.Default.Favorite,
+                    icon = Icons.TwoTone.Quiz,
                     label = "Pet Quiz",
                     onClick = {
                         context.startActivity(Intent(context, FindPerfectPetActivity::class.java))
                     }
                 )
                 ToolItem(
-                    icon = Icons.Default.DateRange,
+                    icon = Icons.TwoTone.CalendarMonth,
                     label = "Age Calculator",
                     onClick = {
                         context.startActivity(
@@ -71,7 +73,7 @@ fun ActionCard(onSearchClick: () -> Unit, modifier: Modifier = Modifier) {
                     }
                 )
                 ToolItem(
-                    icon = Icons.Default.Calculate,
+                    icon = Icons.TwoTone.Calculate,
                     label = "Budget",
                     onClick = {
                         context.startActivity(
@@ -83,7 +85,7 @@ fun ActionCard(onSearchClick: () -> Unit, modifier: Modifier = Modifier) {
                     }
                 )
                 ToolItem(
-                    icon = Icons.Default.Calculate,
+                    icon = Icons.TwoTone.Payments,
                     label = "Cost Estimator",
                     onClick = {
                         context.startActivity(Intent(context, AdoptionCostActivity::class.java))
@@ -107,14 +109,17 @@ private fun ToolItem(
             .padding(4.dp)
     ) {
         Surface(
-            shape = RoundedCornerShape(20.dp),
-            color = MaterialTheme.colorScheme.primaryContainer,
+            shape = RoundedCornerShape(16.dp),
+            border = BorderStroke(
+                1.dp,
+                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f)
+            ),
             modifier = Modifier.size(56.dp)
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = label,
-                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                tint = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.8f),
                 modifier = Modifier.padding(12.dp)
             )
         }
