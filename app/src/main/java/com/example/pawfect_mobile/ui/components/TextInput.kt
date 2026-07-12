@@ -98,6 +98,7 @@ fun TextInput(
     inputType: InputType = InputType.TEXT,
     required: Boolean = false,
     description: String = "",
+    lines: Int = 1,
     validator: ((String) -> String?)? = null
 ) {
     var hasFocus by remember { mutableStateOf(false) }
@@ -155,7 +156,9 @@ fun TextInput(
                     hasFocus = focusState.isFocused
                 },
             isError = displayError != null && hadFocus,
-            singleLine = true,
+            singleLine = lines == 1,
+            minLines = lines,
+            maxLines = lines,
             visualTransformation = inputType.visualTransformation,
             keyboardOptions = inputType.keyboardType,
             trailingIcon = {

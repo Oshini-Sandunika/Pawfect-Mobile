@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pawfect_mobile.ui.components.ErrorCard
+import com.example.pawfect_mobile.ui.components.LoadingCard
 import com.example.pawfect_mobile.ui.components.StyledTopBar
 import com.example.pawfect_mobile.ui.layouts.AppLayout
 import com.example.pawfect_mobile.ui.screens.staff.components.InquiriesTab
@@ -51,7 +52,7 @@ fun StaffDashboardScreen(
             }
 
             if (state.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+                LoadingCard(modifier = Modifier.padding(16.dp))
             } else if (state.error != null) {
                 ErrorCard(error = state.error!!, modifier = Modifier.padding(16.dp))
             } else {

@@ -134,7 +134,10 @@ class PetEditViewModel : ViewModel() {
 
                 PetService.updatePet(pet)
 
-                _state.value = _state.value.copy(isSaving = false, isSuccess = true)
+                _state.value = _state.value.copy(
+                    isSaving = false,
+                    isSuccess = true,
+                )
             } catch (e: Exception) {
                 _state.value =
                     _state.value.copy(isSaving = false, error = e.message ?: "Failed to save pet")

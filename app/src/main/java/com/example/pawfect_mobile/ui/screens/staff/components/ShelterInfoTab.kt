@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +21,9 @@ import androidx.compose.ui.unit.dp
 import com.example.pawfect_mobile.data.models.Shelter
 import com.example.pawfect_mobile.ui.components.ImageInput
 import com.example.pawfect_mobile.ui.components.ImageInputValue
+import com.example.pawfect_mobile.ui.components.Input
+import com.example.pawfect_mobile.ui.components.InputType
+import com.example.pawfect_mobile.ui.components.TextInput
 
 @Composable
 fun ShelterInfoTab(
@@ -41,36 +43,33 @@ fun ShelterInfoTab(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        OutlinedTextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text("Shelter Name") },
-            modifier = Modifier.fillMaxWidth()
+        TextInput(
+            label = "Shelter Name",
+            value = Input.Valid(name),
+            onValueChange = { name = it.string() }
         )
-        OutlinedTextField(
-            value = address,
-            onValueChange = { address = it },
-            label = { Text("Address") },
-            modifier = Modifier.fillMaxWidth()
+        TextInput(
+            label = "Address",
+            value = Input.Valid(address),
+            onValueChange = { address = it.string() }
         )
-        OutlinedTextField(
-            value = phone,
-            onValueChange = { phone = it },
-            label = { Text("Phone") },
-            modifier = Modifier.fillMaxWidth()
+        TextInput(
+            label = "Phone",
+            value = Input.Valid(phone),
+            onValueChange = { phone = it.string() },
+            inputType = InputType.PHONE
         )
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("Email") },
-            modifier = Modifier.fillMaxWidth()
+        TextInput(
+            label = "Email",
+            value = Input.Valid(email),
+            onValueChange = { email = it.string() },
+            inputType = InputType.EMAIL
         )
-        OutlinedTextField(
-            value = description,
-            onValueChange = { description = it },
-            label = { Text("Description") },
-            modifier = Modifier.fillMaxWidth(),
-            minLines = 3
+        TextInput(
+            label = "Description",
+            value = Input.Valid(description),
+            onValueChange = { description = it.string() },
+            lines = 3
         )
 
         var imageInput by remember {
