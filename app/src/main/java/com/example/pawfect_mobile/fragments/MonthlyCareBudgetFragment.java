@@ -100,7 +100,7 @@ public class MonthlyCareBudgetFragment extends Fragment {
     private Spinner spinnerPetCategory, spinnerBreedType, spinnerPetSize;
     private Spinner spinnerAgeGroup, spinnerFoodQuality, spinnerCareLevel, spinnerVetPlan;
     private TextView txtBreedLabel, txtSelectedPet, txtFoodCost, txtRoutineCost;
-    private TextView txtVetCost, txtAddonCost, txtMonthlyTotal, txtYearlyTotal, btnBack;
+    private TextView txtVetCost, txtAddonCost, txtMonthlyTotal, txtYearlyTotal;
     private CheckBox checkGrooming, checkInsurance, checkToys, checkTraining;
     private CheckBox checkMedicine, checkCleaning, checkWalking, checkEmergency;
     private Button btnCalculate, btnReset;
@@ -143,7 +143,6 @@ public class MonthlyCareBudgetFragment extends Fragment {
         txtAddonCost = view.findViewById(R.id.txtAddonCost);
         txtMonthlyTotal = view.findViewById(R.id.txtMonthlyTotal);
         txtYearlyTotal = view.findViewById(R.id.txtYearlyTotal);
-        btnBack = view.findViewById(R.id.btnBack);
 
         checkGrooming = view.findViewById(R.id.checkGrooming);
         checkInsurance = view.findViewById(R.id.checkInsurance);
@@ -184,8 +183,6 @@ public class MonthlyCareBudgetFragment extends Fragment {
     }
 
     private void setupListeners() {
-        btnBack.setOnClickListener(view -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
-
         spinnerPetCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

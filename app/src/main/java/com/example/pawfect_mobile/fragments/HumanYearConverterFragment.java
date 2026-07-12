@@ -75,7 +75,7 @@ public class HumanYearConverterFragment extends Fragment {
     private Spinner spinnerPetCategory, spinnerBreedType, spinnerPetSize;
     private EditText editPetAge;
     private TextView txtBreedLabel, txtSelectedPet, txtHumanAge;
-    private TextView txtLifeStage, txtExplanation, btnBack;
+    private TextView txtLifeStage, txtExplanation;
     private Button btnConvert, btnReset;
     private DecimalFormat decimalFormat;
 
@@ -110,7 +110,6 @@ public class HumanYearConverterFragment extends Fragment {
         txtHumanAge = view.findViewById(R.id.txtHumanAge);
         txtLifeStage = view.findViewById(R.id.txtLifeStage);
         txtExplanation = view.findViewById(R.id.txtExplanation);
-        btnBack = view.findViewById(R.id.btnBack);
 
         btnConvert = view.findViewById(R.id.btnConvert);
         btnReset = view.findViewById(R.id.btnReset);
@@ -137,8 +136,6 @@ public class HumanYearConverterFragment extends Fragment {
     }
 
     private void setupListeners() {
-        btnBack.setOnClickListener(view -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
-
         spinnerPetCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

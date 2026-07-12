@@ -25,7 +25,7 @@ public class FindPerfectPetFragment extends Fragment {
 
     private final float[] answers = new float[10];
     private final int[] selectedIndexes = new int[10];
-    private TextView btnBack, txtQuizTitle, txtQuizSubtitle, txtProgress, txtQuestion;
+    private TextView txtQuizTitle, txtQuizSubtitle, txtProgress, txtQuestion;
     private TextView txtPrediction, txtConfidence, txtModelStatus, txtReason;
     private TextView txtExactPetName, txtExactPetCategory, txtExactPetDesc;
     private Button btnOption1, btnOption2, btnOption3, btnOption4;
@@ -59,7 +59,6 @@ public class FindPerfectPetFragment extends Fragment {
     }
 
     private void initializeViews(View view) {
-        btnBack = view.findViewById(R.id.btnBack);
         txtQuizTitle = view.findViewById(R.id.txtQuizTitle);
         txtQuizSubtitle = view.findViewById(R.id.txtQuizSubtitle);
         txtProgress = view.findViewById(R.id.txtProgress);
@@ -206,8 +205,6 @@ public class FindPerfectPetFragment extends Fragment {
     }
 
     private void setupListeners() {
-        btnBack.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
-
         btnOption1.setOnClickListener(v -> selectOption(0));
         btnOption2.setOnClickListener(v -> selectOption(1));
         btnOption3.setOnClickListener(v -> selectOption(2));

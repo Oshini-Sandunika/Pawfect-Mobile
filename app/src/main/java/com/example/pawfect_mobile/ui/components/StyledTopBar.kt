@@ -40,7 +40,7 @@ fun StyledTopBar(title: String, goBack: (() -> Unit)? = null) {
         },
         colors = androidx.compose.material3.TopAppBarDefaults.topAppBarColors(
             containerColor = Color.White.copy(
-                alpha = 0.75f
+                alpha = 0.9f
             )
         ),
 
