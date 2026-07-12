@@ -5,6 +5,9 @@ data class Inquiry(
     val petId: String = "",
     val shelterId: String = "",
     val userId: String = "",
+    val email: String = "",
     val message: String = "",
-    val timestamp: Long = 0L
+    val timestamp: Long = 0L,
+    @Transient var pet: Pet? = null,
+    @Transient var user: User? = null
 )
