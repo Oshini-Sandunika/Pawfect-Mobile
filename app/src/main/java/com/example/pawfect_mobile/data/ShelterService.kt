@@ -9,18 +9,18 @@ import kotlinx.coroutines.tasks.await
 object ShelterService {
     suspend fun getShelterById(id: String): Shelter? {
         val snapshot = Firebase.firestore.collection("shelters").document(id).get().await()
-        return if (snapshot.exists()) {
-            snapshot.toObject(Shelter::class.java)
-        } else {
-            getPlaceholderShelter()
-        }
+        return snapshot.toObject(Shelter::class.java)
+    }
+
+    suspend fun updateShelter(shelter: Shelter) {
+        Firebase.firestore.collection("shelters").document(shelter.id).set(shelter).await()
     }
 
     suspend fun attachShelters(pets: List<Pet>): List<Pet> {
         val shelterMap = mutableMapOf<String, Shelter?>()
         for (pet in pets) {
             val sId = pet.shelterId
-            
+
             if (!shelterMap.containsKey(sId)) {
                 shelterMap[sId] = getShelterById(sId)
             }
@@ -31,16 +31,4 @@ object ShelterService {
         return pets
     }
 
-    fun getPlaceholderShelter(): Shelter {
-        return Shelter(
-            id = "dummy_shelter",
-            name = "Happy Tails Rescue",
-            address = "123 Pet Lane, Animal City",
-            phone = "555-0199",
-            email = "contact@happytails.org",
-            description = "A loving place for rescued pets.",
-            logo = "https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?auto=format&fit=crop&q=80&w=200",
-            location = "84VW+32 Animal City"
-        )
-    }
 }

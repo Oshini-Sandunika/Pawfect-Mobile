@@ -29,6 +29,7 @@ fun AppLayout(
     noScroll: Boolean = false,
     noInset: Boolean = false,
     topBar: @Composable (() -> Unit) = {},
+    floatingActionButton: @Composable () -> Unit = {},
     content: @Composable (BoxScope.() -> Unit),
 ) {
     val snackState = remember { SnackbarHostState() }
@@ -56,6 +57,7 @@ fun AppLayout(
         Scaffold(
             snackbarHost = { SnackbarHost(snackState) },
             topBar = topBar,
+            floatingActionButton = floatingActionButton,
             content = {
                 Box(
                     content = content,

@@ -10,6 +10,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.material.icons.filled.Business
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -39,11 +43,27 @@ fun HomeScreen(
     onQuizClick: () -> Unit,
     onAgeCalculatorClick: () -> Unit,
     onBudgetClick: () -> Unit,
-    onCostEstimatorClick: () -> Unit
+    onCostEstimatorClick: () -> Unit,
+    onStaffDashboardClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
-    AppLayout(noInset = true) {
+    AppLayout(
+        noInset = true,
+        floatingActionButton = {
+            if (state.currentUser?.shelterId != null) {
+                FloatingActionButton(
+                    onClick = onStaffDashboardClick,
+                    containerColor = MaterialTheme.colorScheme.primary
+                ) {
+                    Icon(
+                        imageVector = androidx.compose.material.icons.Icons.Filled.Business,
+                        contentDescription = "Staff Dashboard"
+                    )
+                }
+            }
+        }
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

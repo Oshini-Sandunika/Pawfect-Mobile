@@ -34,3 +34,9 @@ object FindPerfectPetRoute
 
 @Serializable
 data class PetProfileRoute(val petId: String)
+
+@Serializable
+object StaffDashboardRoute
+
+@Serializable
+data class PetEditRoute(val petId: String?)

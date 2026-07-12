@@ -17,10 +17,7 @@ object PetService {
             .get()
             .await()
 
-        var pets = snapshot.documents.mapNotNull { it.toObject(Pet::class.java) }
-        if (pets.isEmpty()) {
-            pets = getPlaceholderPets()
-        }
+        val pets = snapshot.documents.mapNotNull { it.toObject(Pet::class.java) }
 
         return ShelterService.attachShelters(pets)
 
@@ -31,11 +28,10 @@ object PetService {
             .document(id)
             .get().await()
 
-        val pet =
-            snapshot.toObject(Pet::class.java) ?: getPlaceholderPets().find { it.id == id }
+        val pet = snapshot.toObject(Pet::class.java)
 
         if (pet != null) {
-            pet.shelter = ShelterService.getShelterById(id)
+            pet.shelter = ShelterService.getShelterById(pet.shelterId)
         }
 
         return pet
@@ -54,6 +50,15 @@ object PetService {
 
     }
 
+    suspend fun getByShelterId(shelterId: String): List<Pet> {
+        val querySnapshot = Firebase.firestore.collection("pets")
+            .whereEqualTo("shelterId", shelterId)
+            .get()
+            .await()
+
+        return querySnapshot.documents.mapNotNull { it.toObject(Pet::class.java) }
+    }
+
     suspend fun searchPets(query: String, type: String?): List<Pet> {
         val querySnapshot = if (!type.isNullOrBlank() && type != "All") {
             Firebase.firestore.collection("pets")
@@ -68,15 +73,6 @@ object PetService {
 
         var allFetched = querySnapshot.documents.mapNotNull { it.toObject(Pet::class.java) }
 
-        if (allFetched.isEmpty()) {
-            allFetched = mutableListOf()
-            repeat(10) { allFetched.addAll(getPlaceholderPets()) }
-            allFetched.shuffle()
-
-            if (!type.isNullOrBlank() && type != "All") {
-                allFetched = allFetched.filter { it.species.equals(type, ignoreCase = true) }
-            }
-        }
 
         if (!query.isBlank()) {
             val q = query.lowercase()
@@ -90,27 +86,22 @@ object PetService {
         return ShelterService.attachShelters(allFetched)
     }
 
+    suspend fun addPet(pet: Pet) {
+        val ref = if (pet.id.isEmpty()) {
+            Firebase.firestore.collection("pets").document()
+        } else {
+            Firebase.firestore.collection("pets").document(pet.id)
+        }
 
-    private fun getPlaceholderPets(): List<Pet> {
-        return listOf(
-            Pet(
-                "1", "Bella", "Dog", "Golden Retriever", "2 years",
-                "Friendly and energetic dog.",
-                "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=500",
-                true, 250.0, 50.0, "dummy_shelter"
-            ),
-            Pet(
-                "2", "Luna", "Cat", "Persian", "1 year",
-                "Quiet and cuddly companion.",
-                "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=500",
-                true, 100.0, 30.0, "dummy_shelter"
-            ),
-            Pet(
-                "3", "Charlie", "Dog", "Beagle", "3 years",
-                "Loves the outdoors and howling.",
-                "https://images.unsplash.com/photo-1537151608804-ea2f1414360c?auto=format&fit=crop&q=80&w=500",
-                true, 200.0, 45.0, "dummy_shelter"
-            )
-        )
+        pet.id = ref.id
+        ref.set(pet).await()
+    }
+
+    suspend fun updatePet(pet: Pet) {
+        Firebase.firestore.collection("pets").document(pet.id).set(pet).await()
+    }
+
+    suspend fun deletePet(petId: String) {
+        Firebase.firestore.collection("pets").document(petId).delete().await()
     }
 }

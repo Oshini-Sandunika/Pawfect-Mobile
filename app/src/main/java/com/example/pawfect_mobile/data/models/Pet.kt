@@ -2,7 +2,7 @@ package com.example.pawfect_mobile.data.models
 
 import java.io.Serializable
 
-class Pet(
+data class Pet(
     var id: String = "",
     var name: String = "",
     var species: String = "",

@@ -1,31 +1,47 @@
 package com.example.pawfect_mobile.data
 
+import com.example.pawfect_mobile.data.models.Inquiry
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.UUID
+import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.tasks.await
 
 object InquiryService {
 
-    fun submitInquiry(petId: String, shelterId: String, message: String, onResult: (Boolean) -> Unit) {
-        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: "anonymous"
-        val db = FirebaseFirestore.getInstance()
-        val inquiryId = UUID.randomUUID().toString()
+    fun submitInquiry(
+        petId: String,
+        shelterId: String,
+        message: String,
+        onResult: (Boolean) -> Unit
+    ) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid!!
 
-        val inquiry = mapOf(
-            "id" to inquiryId,
-            "petId" to petId,
-            "shelterId" to shelterId,
-            "userId" to uid,
-            "message" to message,
-            "timestamp" to System.currentTimeMillis()
+        val inquiry = Inquiry(
+            petId = petId,
+            shelterId = shelterId,
+            userId = uid,
+            message = message,
+            timestamp = System.currentTimeMillis()
         )
 
-        db.collection("inquiries").document(inquiryId).set(inquiry)
-            .addOnSuccessListener {
-                onResult(true)
-            }
+        val ref = Firebase.firestore.collection("inquiries").document()
+        inquiry.id = ref.id
+        ref.set(inquiry).addOnSuccessListener {
+            onResult(true)
+        }
             .addOnFailureListener {
                 onResult(false)
             }
+    }
+
+    suspend fun getInquiriesForShelter(shelterId: String): List<Inquiry> {
+        val snapshot = FirebaseFirestore.getInstance().collection("inquiries")
+            .whereEqualTo("shelterId", shelterId)
+            .get()
+            .await()
+
+        return snapshot.documents.mapNotNull { it.toObject(Inquiry::class.java) }
+            .sortedByDescending { it.timestamp }
     }
 }

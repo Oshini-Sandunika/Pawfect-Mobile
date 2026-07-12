@@ -23,8 +23,8 @@ import com.example.pawfect_mobile.R
 
 @Composable
 @Preview
-fun ErrorCard(details: String? = null, error: String? = null) {
-    StyledCard {
+fun ErrorCard(details: String? = null, error: String? = null, modifier: Modifier= Modifier) {
+    StyledCard(modifier = modifier) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

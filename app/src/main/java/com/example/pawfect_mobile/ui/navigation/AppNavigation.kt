@@ -114,6 +114,9 @@ fun AppNavigation() {
                 },
                 onCostEstimatorClick = {
                     navController.navigate(AdoptionCostRoute)
+                },
+                onStaffDashboardClick = {
+                    navController.navigate(StaffDashboardRoute)
                 }
             )
         }
@@ -183,6 +186,19 @@ fun AppNavigation() {
                     arguments = Bundle().apply { putString("PET_ID", route.petId) }
                 )
             }
+        }
+        composable<StaffDashboardRoute> {
+            com.example.pawfect_mobile.ui.screens.staff.StaffDashboardScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToPetEdit = { petId -> navController.navigate(PetEditRoute(petId)) }
+            )
+        }
+        composable<PetEditRoute> { backStackEntry ->
+            val route = backStackEntry.toRoute<PetEditRoute>()
+            com.example.pawfect_mobile.ui.screens.staff.PetEditScreen(
+                petId = route.petId,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
     }
 }
