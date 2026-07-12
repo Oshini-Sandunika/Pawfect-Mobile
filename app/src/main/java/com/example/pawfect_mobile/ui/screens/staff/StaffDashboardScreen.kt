@@ -3,6 +3,8 @@ package com.example.pawfect_mobile.ui.screens.staff
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -17,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pawfect_mobile.ui.components.ErrorCard
 import com.example.pawfect_mobile.ui.components.LoadingCard
+import com.example.pawfect_mobile.ui.components.StyledIconButton
 import com.example.pawfect_mobile.ui.components.StyledTopBar
 import com.example.pawfect_mobile.ui.layouts.AppLayout
 import com.example.pawfect_mobile.ui.screens.staff.components.InquiriesTab
@@ -41,6 +44,15 @@ fun StaffDashboardScreen(
         topBar = {
             StyledTopBar(title = "Staff Dashboard", goBack = onNavigateBack)
         },
+        floatingActionButton = {
+            if (selectedTabIndex == 0) {
+                StyledIconButton(
+                    onClick = { onNavigateToPetEdit(null) },
+                    icon = Icons.Default.Add,
+                    elevation = 24.dp
+                )
+            }
+        },
         noScroll = true
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -62,7 +74,6 @@ fun StaffDashboardScreen(
                 when (selectedTabIndex) {
                     0 -> PetListingsTab(
                         pets = state.pets,
-                        onAddPet = { onNavigateToPetEdit(null) },
                         onEditPet = { onNavigateToPetEdit(it.id) }
                     )
 
