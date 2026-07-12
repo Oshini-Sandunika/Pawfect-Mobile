@@ -1,9 +1,21 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Pawfect_Mobile" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primaryLight</item>
+        <item name="colorOnPrimary">@color/onPrimaryLight</item>
+        <item name="android:colorBackground">@color/backgroundLight</item>
+        <item name="colorSurface">@color/surfaceLight</item>
+        <item name="colorOnSurface">@color/onSurfaceLight</item>
     </style>
 
     <style name="Theme.Pawfect_Mobile" parent="Base.Theme.Pawfect_Mobile" />
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- Set the splash screen background, animated icon, and animation duration. -->
+        <item name="windowSplashScreenBackground">@color/backgroundLight</item>
+        <!-- Use windowSplashScreenAnimatedIcon to add a drawable or an animated drawable. -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/pawfect_logo_splash</item>
+        <!-- Set the theme of the Activity that directly follows your splash screen. -->
+        <item name="postSplashScreenTheme">@style/Theme.Pawfect_Mobile</item>
+    </style>
 </resources>

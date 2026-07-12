@@ -61,6 +61,7 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     implementation(libs.cardview)
     implementation(libs.litert)
+    implementation("androidx.core:core-splashscreen:1.0.1")
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
 

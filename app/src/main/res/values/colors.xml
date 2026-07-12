@@ -3,4 +3,20 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="quiz_option_text">#7B624C</color>
+
+    <!-- Light Theme Colors -->
+    <color name="primaryLight">#5B3A2E</color>
+    <color name="onPrimaryLight">#FFFFFF</color>
+    <color name="backgroundLight">#FAF7F2</color>
+    <color name="onBackgroundLight">#4E342E</color>
+    <color name="surfaceLight">#FAF7F2</color>
+    <color name="onSurfaceLight">#4E342E</color>
+
+    <!-- Dark Theme Colors -->
+    <color name="primaryDark">#FFB5A0</color>
+    <color name="onPrimaryDark">#561F0F</color>
+    <color name="backgroundDark">#1A110F</color>
+    <color name="onBackgroundDark">#F1DFDA</color>
+    <color name="surfaceDark">#1A110F</color>
+    <color name="onSurfaceDark">#F1DFDA</color>
 </resources>
