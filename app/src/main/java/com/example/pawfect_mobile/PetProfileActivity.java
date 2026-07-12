@@ -2,8 +2,10 @@ package com.example.pawfect_mobile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,8 +17,6 @@ import com.example.pawfect_mobile.data.models.Pet;
 
 import java.util.Locale;
 
-import kotlin.Unit;
-
 public class PetProfileActivity extends AppCompatActivity {
 
     private ImageView petImageView;
@@ -24,8 +24,15 @@ public class PetProfileActivity extends AppCompatActivity {
     private TextView petBreedTextView;
     private TextView petAgeTextView;
     private TextView petMonthlyCostTextView;
+    private TextView petAdoptionFeeTextView;
     private TextView petDescriptionTextView;
     private Button btnAdoptMe;
+    private LinearLayout shelterSection;
+    private ImageView shelterLogoImageView;
+    private TextView shelterNameTextView;
+    private TextView shelterAddressTextView;
+    private TextView shelterPhoneTextView;
+    private TextView shelterEmailTextView;
 
 
     private Pet currentPet;
@@ -66,12 +73,19 @@ public class PetProfileActivity extends AppCompatActivity {
         petBreedTextView = findViewById(R.id.petBreedTextView);
         petAgeTextView = findViewById(R.id.petAgeTextView);
         petMonthlyCostTextView = findViewById(R.id.petMonthlyCostTextView);
+        petAdoptionFeeTextView = findViewById(R.id.petAdoptionFeeTextView);
         petDescriptionTextView = findViewById(R.id.petDescriptionTextView);
         btnAdoptMe = findViewById(R.id.btnAdoptMe);
+        shelterSection = findViewById(R.id.shelterSection);
+        shelterLogoImageView = findViewById(R.id.shelterLogoImageView);
+        shelterNameTextView = findViewById(R.id.shelterNameTextView);
+        shelterAddressTextView = findViewById(R.id.shelterAddressTextView);
+        shelterPhoneTextView = findViewById(R.id.shelterPhoneTextView);
+        shelterEmailTextView = findViewById(R.id.shelterEmailTextView);
     }
 
     private void loadPetData() {
-        PetService.INSTANCE.getPetById(petId, pet -> {
+        PetService.INSTANCE.getPetByIdCB(petId, pet -> {
             if (pet == null) {
                 Toast.makeText(
                         PetProfileActivity.this,
@@ -85,7 +99,7 @@ public class PetProfileActivity extends AppCompatActivity {
             currentPet = pet;
             updateUI();
             btnAdoptMe.setEnabled(true);
-            return Unit.INSTANCE;
+            return kotlin.Unit.INSTANCE;
         });
     }
 
@@ -127,8 +141,35 @@ public class PetProfileActivity extends AppCompatActivity {
         );
 
         petMonthlyCostTextView.setText(monthlyCost);
+        petAdoptionFeeTextView.setText(currentPet.getAdoptionFee() == 0 ? "Free" : String.format("Rs. %.2f", currentPet.getAdoptionFee()));
 
         String imageUrl = currentPet.getImageUrl();
+
+
+        if (currentPet.getShelter() != null) {
+            shelterSection.setVisibility(View.VISIBLE);
+            shelterSection.setOnClickListener(v -> {
+                Toast.makeText(this, "Opening shelter details...", Toast.LENGTH_SHORT).show();
+            });
+            com.example.pawfect_mobile.data.models.Shelter s = currentPet.getShelter();
+            shelterNameTextView.setText(getSafeText(s.getName(), "Unknown Shelter"));
+            shelterAddressTextView.setText(getSafeText(s.getAddress(), "Unknown Address"));
+            shelterPhoneTextView.setText("Phone: " + getSafeText(s.getPhone(), "N/A"));
+            shelterEmailTextView.setText("Email: " + getSafeText(s.getEmail(), "N/A"));
+
+            String logoUrl = s.getLogo();
+            if (logoUrl != null && !logoUrl.trim().isEmpty()) {
+                Glide.with(this)
+                        .load(logoUrl)
+                        .placeholder(android.R.color.darker_gray)
+                        .error(android.R.color.darker_gray)
+                        .into(shelterLogoImageView);
+            } else {
+                shelterLogoImageView.setImageResource(android.R.color.darker_gray);
+            }
+        } else {
+            shelterSection.setVisibility(View.GONE);
+        }
 
         if (imageUrl != null && !imageUrl.trim().isEmpty()) {
             Glide.with(this)
