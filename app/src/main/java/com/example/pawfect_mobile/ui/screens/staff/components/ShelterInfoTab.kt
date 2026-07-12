@@ -23,6 +23,7 @@ import com.example.pawfect_mobile.ui.components.ImageInput
 import com.example.pawfect_mobile.ui.components.ImageInputValue
 import com.example.pawfect_mobile.ui.components.Input
 import com.example.pawfect_mobile.ui.components.InputType
+import com.example.pawfect_mobile.ui.components.StyledCard
 import com.example.pawfect_mobile.ui.components.TextInput
 
 @Composable
@@ -36,76 +37,80 @@ fun ShelterInfoTab(
     var email by remember { mutableStateOf(shelter.email) }
     var description by remember { mutableStateOf(shelter.description) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        TextInput(
-            label = "Shelter Name",
-            value = Input.Valid(name),
-            onValueChange = { name = it.string() }
-        )
-        TextInput(
-            label = "Address",
-            value = Input.Valid(address),
-            onValueChange = { address = it.string() }
-        )
-        TextInput(
-            label = "Phone",
-            value = Input.Valid(phone),
-            onValueChange = { phone = it.string() },
-            inputType = InputType.PHONE
-        )
-        TextInput(
-            label = "Email",
-            value = Input.Valid(email),
-            onValueChange = { email = it.string() },
-            inputType = InputType.EMAIL
-        )
-        TextInput(
-            label = "Description",
-            value = Input.Valid(description),
-            onValueChange = { description = it.string() },
-            lines = 3
-        )
+    StyledCard(modifier = Modifier
+        .padding(12.dp)
+        .verticalScroll(rememberScrollState())) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
 
-        var imageInput by remember {
-            mutableStateOf(
-                if (shelter.logo.isNotBlank())
-                    ImageInputValue.Url(shelter.logo)
-                else
-                    ImageInputValue.Empty
-            )
-        }
-        val context = LocalContext.current
-
-        ImageInput(
-            value = imageInput,
-            onValueChange = { imageInput = it },
-            modifier = Modifier.fillMaxWidth(),
-            label = "Shelter Logo URL"
-        )
-
-        Button(
-            onClick = {
-                onSave(
-                    shelter.copy(
-                        name = name,
-                        address = address,
-                        phone = phone,
-                        email = email,
-                        description = description
-                    ),
-                    context,
-                    imageInput
-                )
-            },
-            modifier = Modifier.fillMaxWidth()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text("Save Changes")
+            TextInput(
+                label = "Shelter Name",
+                value = Input.Valid(name),
+                onValueChange = { name = it.string() }
+            )
+            TextInput(
+                label = "Address",
+                value = Input.Valid(address),
+                onValueChange = { address = it.string() }
+            )
+            TextInput(
+                label = "Phone",
+                value = Input.Valid(phone),
+                onValueChange = { phone = it.string() },
+                inputType = InputType.PHONE
+            )
+            TextInput(
+                label = "Email",
+                value = Input.Valid(email),
+                onValueChange = { email = it.string() },
+                inputType = InputType.EMAIL
+            )
+            TextInput(
+                label = "Description",
+                value = Input.Valid(description),
+                onValueChange = { description = it.string() },
+                lines = 3
+            )
+
+            var imageInput by remember {
+                mutableStateOf(
+                    if (shelter.logo.isNotBlank())
+                        ImageInputValue.Url(shelter.logo)
+                    else
+                        ImageInputValue.Empty
+                )
+            }
+            val context = LocalContext.current
+
+            ImageInput(
+                value = imageInput,
+                onValueChange = { imageInput = it },
+                modifier = Modifier.fillMaxWidth(),
+                label = "Shelter Logo URL"
+            )
+
+            Button(
+                onClick = {
+                    onSave(
+                        shelter.copy(
+                            name = name,
+                            address = address,
+                            phone = phone,
+                            email = email,
+                            description = description
+                        ),
+                        context,
+                        imageInput
+                    )
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Save Changes")
+            }
         }
     }
 }
