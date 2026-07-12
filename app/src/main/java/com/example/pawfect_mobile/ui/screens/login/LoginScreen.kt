@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pawfect_mobile.R
 import com.example.pawfect_mobile.ui.components.InputType
 import com.example.pawfect_mobile.ui.components.TextInput
 import com.example.pawfect_mobile.ui.layouts.LoginLayout
@@ -34,7 +35,8 @@ fun LoginScreen(
 
     LoginLayout(
         title = "Welcome back!",
-        subtitle = "Enter your login details to continue"
+        subtitle = "Enter your login details to continue",
+        image = R.drawable.login,
     ) {
         TextInput(
             label = "Email",

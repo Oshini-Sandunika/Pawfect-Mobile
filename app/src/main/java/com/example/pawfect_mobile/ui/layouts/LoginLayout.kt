@@ -1,16 +1,19 @@
 package com.example.pawfect_mobile.ui.layouts
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -28,7 +31,8 @@ import com.example.pawfect_mobile.R
 fun LoginLayout(
     title: String,
     subtitle: String,
-    content: @Composable () -> Unit
+    @DrawableRes image: Int,
+    content: @Composable () -> Unit,
 ) {
     AppLayout {
         Column(
@@ -73,13 +77,24 @@ fun LoginLayout(
                         verticalArrangement = Arrangement.Center,
                         modifier = Modifier.padding(32.dp)
                     ) {
-                        Text(title, fontSize = 24.sp, fontWeight = FontWeight.Bold)
-                        Text(
-                            subtitle,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Thin,
-                            modifier = Modifier.padding(bottom = 24.dp)
-                        )
+                        Row {
+                            Image(
+                                painter = painterResource(id = image),
+                                contentDescription = "",
+                                modifier = Modifier.size(54.dp)
+                            )
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Column(verticalArrangement = Arrangement.Center) {
+                                Text(title, fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                                Text(
+                                    subtitle,
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Thin,
+                                    modifier = Modifier.padding(bottom = 24.dp)
+                                )
+                            }
+                        }
+
 
                         content()
                     }

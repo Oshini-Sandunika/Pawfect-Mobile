@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pawfect_mobile.R
 import com.example.pawfect_mobile.ui.components.InputType
 import com.example.pawfect_mobile.ui.components.TextInput
 import com.example.pawfect_mobile.ui.layouts.LoginLayout
@@ -34,7 +35,8 @@ fun RegisterScreen(
 
     LoginLayout(
         title = "Create an Account",
-        subtitle = "Join Pawfect to find your furry friend"
+        subtitle = "Join Pawfect to find your furry friend",
+        image = R.drawable.register,
     ) {
         TextInput(
             label = "Full Name",
