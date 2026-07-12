@@ -2,10 +2,12 @@ package com.example.pawfect_mobile.ui.navigation
 
 import android.os.Bundle
 import androidx.activity.compose.LocalActivity
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.fragment.compose.AndroidFragment
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -170,16 +172,17 @@ fun AppNavigation() {
         }
         composable<PetProfileRoute> { backStackEntry ->
             val route = backStackEntry.toRoute<PetProfileRoute>()
-            AppLayout(topBar = {
-                StyledTopBar(
-                    title = "Pet Profile",
-                    goBack = { navController.popBackStack() })
-            }) {
+            AppLayout(
+                topBar = {
+                    StyledTopBar(
+                        title = "Pet Profile",
+                        goBack = { navController.popBackStack() })
+                }) {
                 AndroidFragment<PetProfileFragment>(
+                    modifier = Modifier.fillMaxSize(),
                     arguments = Bundle().apply { putString("PET_ID", route.petId) }
                 )
             }
         }
     }
 }
-
