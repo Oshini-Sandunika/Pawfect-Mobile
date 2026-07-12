@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
-        
+
         super.onCreate(savedInstanceState)
         this.enableEdgeToEdge()
 
@@ -23,7 +23,7 @@ class MainActivity : FragmentActivity() {
         }
 
         setContent {
-            AppTheme(darkTheme = true) {
+            AppTheme(darkTheme = false) {
                 AppNavigation()
             }
         }

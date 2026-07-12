@@ -53,7 +53,7 @@ fun AppLayout(
         contentModifier = contentModifier.verticalScroll(rememberScrollState())
     }
 
-    AppTheme {
+    AppTheme(darkTheme = false) {
         Scaffold(
             snackbarHost = { SnackbarHost(snackState) },
             topBar = topBar,
