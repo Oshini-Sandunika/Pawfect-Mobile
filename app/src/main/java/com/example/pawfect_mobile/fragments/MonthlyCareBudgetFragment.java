@@ -1,7 +1,9 @@
-package com.example.pawfect_mobile;
+package com.example.pawfect_mobile.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -10,30 +12,20 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.example.pawfect_mobile.R;
 
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class MonthlyCareBudgetActivity extends AppCompatActivity {
-
-    private Spinner spinnerPetCategory, spinnerBreedType, spinnerPetSize;
-    private Spinner spinnerAgeGroup, spinnerFoodQuality, spinnerCareLevel, spinnerVetPlan;
-
-    private TextView txtBreedLabel, txtSelectedPet, txtFoodCost, txtRoutineCost;
-    private TextView txtVetCost, txtAddonCost, txtMonthlyTotal, txtYearlyTotal, btnBack;
-
-    private CheckBox checkGrooming, checkInsurance, checkToys, checkTraining;
-    private CheckBox checkMedicine, checkCleaning, checkWalking, checkEmergency;
-
-    private Button btnCalculate, btnReset;
-
-    private NumberFormat numberFormat;
+public class MonthlyCareBudgetFragment extends Fragment {
 
     private final String[] petCategories = {
             "Dog", "Cat", "Rabbit", "Bird", "Fish"
     };
-
     private final String[] dogBreeds = {
             "Labrador Retriever",
             "Golden Retriever",
@@ -45,7 +37,6 @@ public class MonthlyCareBudgetActivity extends AppCompatActivity {
             "Mixed Breed - Medium",
             "Mixed Breed - Large"
     };
-
     private final String[] catBreeds = {
             "Domestic Short Hair",
             "Persian",
@@ -55,7 +46,6 @@ public class MonthlyCareBudgetActivity extends AppCompatActivity {
             "Bengal",
             "Mixed Breed Cat"
     };
-
     private final String[] rabbitTypes = {
             "Netherland Dwarf",
             "Holland Lop",
@@ -64,7 +54,6 @@ public class MonthlyCareBudgetActivity extends AppCompatActivity {
             "Angora Rabbit",
             "Mixed Rabbit"
     };
-
     private final String[] birdTypes = {
             "Budgie",
             "Cockatiel",
@@ -73,7 +62,6 @@ public class MonthlyCareBudgetActivity extends AppCompatActivity {
             "Parrot",
             "Finch"
     };
-
     private final String[] fishTypes = {
             "Goldfish",
             "Betta Fish",
@@ -82,47 +70,51 @@ public class MonthlyCareBudgetActivity extends AppCompatActivity {
             "Cichlid",
             "Tropical Community Fish"
     };
-
     private final String[] petSizes = {
             "Small", "Medium", "Large"
     };
-
     private final String[] ageGroups = {
             "Baby / Puppy / Kitten",
             "Young",
             "Adult",
             "Senior"
     };
-
     private final String[] foodQualities = {
             "Basic",
             "Standard",
             "Premium",
             "Special Diet"
     };
-
     private final String[] careLevels = {
             "Budget Care",
             "Normal Care",
             "Comfort Care",
             "Premium Care"
     };
-
     private final String[] vetPlans = {
             "Basic Vet Saving",
             "Standard Vet Saving",
             "Preventive Care Plan",
             "Senior / Medical Plan"
     };
+    private Spinner spinnerPetCategory, spinnerBreedType, spinnerPetSize;
+    private Spinner spinnerAgeGroup, spinnerFoodQuality, spinnerCareLevel, spinnerVetPlan;
+    private TextView txtBreedLabel, txtSelectedPet, txtFoodCost, txtRoutineCost;
+    private TextView txtVetCost, txtAddonCost, txtMonthlyTotal, txtYearlyTotal, btnBack;
+    private CheckBox checkGrooming, checkInsurance, checkToys, checkTraining;
+    private CheckBox checkMedicine, checkCleaning, checkWalking, checkEmergency;
+    private Button btnCalculate, btnReset;
+    private NumberFormat numberFormat;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_monthly_budget);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.activity_monthly_budget, container, false);
 
         numberFormat = NumberFormat.getNumberInstance(Locale.US);
 
-        initializeViews();
+        initializeViews(view);
         clearButtonTints();
         setupSpinners();
         setupListeners();
@@ -130,38 +122,40 @@ public class MonthlyCareBudgetActivity extends AppCompatActivity {
         updateBreedSpinner("Dog");
         updateOptionAvailability("Dog");
         calculateMonthlyCost();
+
+        return view;
     }
 
-    private void initializeViews() {
-        spinnerPetCategory = findViewById(R.id.spinnerPetCategory);
-        spinnerBreedType = findViewById(R.id.spinnerBreedType);
-        spinnerPetSize = findViewById(R.id.spinnerPetSize);
-        spinnerAgeGroup = findViewById(R.id.spinnerAgeGroup);
-        spinnerFoodQuality = findViewById(R.id.spinnerFoodQuality);
-        spinnerCareLevel = findViewById(R.id.spinnerCareLevel);
-        spinnerVetPlan = findViewById(R.id.spinnerVetPlan);
+    private void initializeViews(View view) {
+        spinnerPetCategory = view.findViewById(R.id.spinnerPetCategory);
+        spinnerBreedType = view.findViewById(R.id.spinnerBreedType);
+        spinnerPetSize = view.findViewById(R.id.spinnerPetSize);
+        spinnerAgeGroup = view.findViewById(R.id.spinnerAgeGroup);
+        spinnerFoodQuality = view.findViewById(R.id.spinnerFoodQuality);
+        spinnerCareLevel = view.findViewById(R.id.spinnerCareLevel);
+        spinnerVetPlan = view.findViewById(R.id.spinnerVetPlan);
 
-        txtBreedLabel = findViewById(R.id.txtBreedLabel);
-        txtSelectedPet = findViewById(R.id.txtSelectedPet);
-        txtFoodCost = findViewById(R.id.txtFoodCost);
-        txtRoutineCost = findViewById(R.id.txtRoutineCost);
-        txtVetCost = findViewById(R.id.txtVetCost);
-        txtAddonCost = findViewById(R.id.txtAddonCost);
-        txtMonthlyTotal = findViewById(R.id.txtMonthlyTotal);
-        txtYearlyTotal = findViewById(R.id.txtYearlyTotal);
-        btnBack = findViewById(R.id.btnBack);
+        txtBreedLabel = view.findViewById(R.id.txtBreedLabel);
+        txtSelectedPet = view.findViewById(R.id.txtSelectedPet);
+        txtFoodCost = view.findViewById(R.id.txtFoodCost);
+        txtRoutineCost = view.findViewById(R.id.txtRoutineCost);
+        txtVetCost = view.findViewById(R.id.txtVetCost);
+        txtAddonCost = view.findViewById(R.id.txtAddonCost);
+        txtMonthlyTotal = view.findViewById(R.id.txtMonthlyTotal);
+        txtYearlyTotal = view.findViewById(R.id.txtYearlyTotal);
+        btnBack = view.findViewById(R.id.btnBack);
 
-        checkGrooming = findViewById(R.id.checkGrooming);
-        checkInsurance = findViewById(R.id.checkInsurance);
-        checkToys = findViewById(R.id.checkToys);
-        checkTraining = findViewById(R.id.checkTraining);
-        checkMedicine = findViewById(R.id.checkMedicine);
-        checkCleaning = findViewById(R.id.checkCleaning);
-        checkWalking = findViewById(R.id.checkWalking);
-        checkEmergency = findViewById(R.id.checkEmergency);
+        checkGrooming = view.findViewById(R.id.checkGrooming);
+        checkInsurance = view.findViewById(R.id.checkInsurance);
+        checkToys = view.findViewById(R.id.checkToys);
+        checkTraining = view.findViewById(R.id.checkTraining);
+        checkMedicine = view.findViewById(R.id.checkMedicine);
+        checkCleaning = view.findViewById(R.id.checkCleaning);
+        checkWalking = view.findViewById(R.id.checkWalking);
+        checkEmergency = view.findViewById(R.id.checkEmergency);
 
-        btnCalculate = findViewById(R.id.btnCalculate);
-        btnReset = findViewById(R.id.btnReset);
+        btnCalculate = view.findViewById(R.id.btnCalculate);
+        btnReset = view.findViewById(R.id.btnReset);
     }
 
     private void clearButtonTints() {
@@ -180,7 +174,7 @@ public class MonthlyCareBudgetActivity extends AppCompatActivity {
 
     private void setSpinnerAdapter(Spinner spinner, String[] data) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this,
+                requireContext(),
                 android.R.layout.simple_spinner_item,
                 data
         );
@@ -190,7 +184,7 @@ public class MonthlyCareBudgetActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
-        btnBack.setOnClickListener(view -> finish());
+        btnBack.setOnClickListener(view -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
 
         spinnerPetCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

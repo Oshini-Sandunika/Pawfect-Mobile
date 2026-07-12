@@ -35,7 +35,11 @@ fun HomeScreen(
     viewModel: HomeViewModel = viewModel(),
     onProfileClick: () -> Unit,
     onPetClick: (id: String) -> Unit,
-    onSearchClick: () -> Unit
+    onSearchClick: () -> Unit,
+    onQuizClick: () -> Unit,
+    onAgeCalculatorClick: () -> Unit,
+    onBudgetClick: () -> Unit,
+    onCostEstimatorClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -70,7 +74,11 @@ fun HomeScreen(
             ) {
                 // Tools Card with Search
                 ActionCard(
-                    onSearchClick,
+                    onSearchClick = onSearchClick,
+                    onQuizClick = onQuizClick,
+                    onAgeCalculatorClick = onAgeCalculatorClick,
+                    onBudgetClick = onBudgetClick,
+                    onCostEstimatorClick = onCostEstimatorClick,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)

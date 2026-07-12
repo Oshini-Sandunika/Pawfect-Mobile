@@ -29,15 +29,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.pawfect_mobile.AdoptionCostActivity
-import com.example.pawfect_mobile.FindPerfectPetActivity
-import com.example.pawfect_mobile.HumanYearConverterActivity
-import com.example.pawfect_mobile.MonthlyCareBudgetActivity
+
 import com.example.pawfect_mobile.ui.components.StyledCard
 
 @Composable
-fun ActionCard(onSearchClick: () -> Unit, modifier: Modifier = Modifier) {
-    val context = LocalContext.current
+fun ActionCard(
+    onSearchClick: () -> Unit,
+    onQuizClick: () -> Unit,
+    onAgeCalculatorClick: () -> Unit,
+    onBudgetClick: () -> Unit,
+    onCostEstimatorClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
 
     StyledCard(
         modifier = modifier,
@@ -56,40 +59,22 @@ fun ActionCard(onSearchClick: () -> Unit, modifier: Modifier = Modifier) {
                 ToolItem(
                     icon = Icons.TwoTone.Quiz,
                     label = "Pet Quiz",
-                    onClick = {
-                        context.startActivity(Intent(context, FindPerfectPetActivity::class.java))
-                    }
+                    onClick = onQuizClick
                 )
                 ToolItem(
                     icon = Icons.TwoTone.CalendarMonth,
                     label = "Age Calculator",
-                    onClick = {
-                        context.startActivity(
-                            Intent(
-                                context,
-                                HumanYearConverterActivity::class.java
-                            )
-                        )
-                    }
+                    onClick = onAgeCalculatorClick
                 )
                 ToolItem(
                     icon = Icons.TwoTone.Calculate,
                     label = "Budget",
-                    onClick = {
-                        context.startActivity(
-                            Intent(
-                                context,
-                                MonthlyCareBudgetActivity::class.java
-                            )
-                        )
-                    }
+                    onClick = onBudgetClick
                 )
                 ToolItem(
                     icon = Icons.TwoTone.Payments,
                     label = "Cost Estimator",
-                    onClick = {
-                        context.startActivity(Intent(context, AdoptionCostActivity::class.java))
-                    }
+                    onClick = onCostEstimatorClick
                 )
             }
         }

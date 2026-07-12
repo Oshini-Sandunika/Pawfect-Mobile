@@ -1,16 +1,24 @@
 package com.example.pawfect_mobile.ui.navigation
 
-import android.content.Intent
+import android.os.Bundle
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.fragment.compose.AndroidFragment
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.pawfect_mobile.PetProfileActivity
+import androidx.navigation.toRoute
 import com.example.pawfect_mobile.data.AuthService
+import com.example.pawfect_mobile.fragments.AdoptionCostFragment
+import com.example.pawfect_mobile.fragments.FindPerfectPetFragment
+import com.example.pawfect_mobile.fragments.HumanYearConverterFragment
+import com.example.pawfect_mobile.fragments.MonthlyCareBudgetFragment
+import com.example.pawfect_mobile.fragments.PetProfileFragment
+import com.example.pawfect_mobile.ui.components.StyledTopBar
+import com.example.pawfect_mobile.ui.layouts.AppLayout
 import com.example.pawfect_mobile.ui.screens.SplashScreen
 import com.example.pawfect_mobile.ui.screens.home.HomeScreen
 import com.example.pawfect_mobile.ui.screens.login.LoginScreen
@@ -19,7 +27,6 @@ import com.example.pawfect_mobile.ui.screens.register.RegisterScreen
 import com.example.pawfect_mobile.ui.screens.search.SearchScreen
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
-import kotlinx.serialization.Serializable
 
 @Composable
 fun AppNavigation() {
@@ -92,9 +99,19 @@ fun AppNavigation() {
                     navController.navigate(SearchRoute)
                 },
                 onPetClick = {
-                    val intent = Intent(activity, PetProfileActivity::class.java)
-                    intent.putExtra("PET_ID", it)
-                    activity?.startActivity(intent)
+                    navController.navigate(PetProfileRoute(it))
+                },
+                onQuizClick = {
+                    navController.navigate(FindPerfectPetRoute)
+                },
+                onAgeCalculatorClick = {
+                    navController.navigate(HumanYearConverterRoute)
+                },
+                onBudgetClick = {
+                    navController.navigate(MonthlyCareBudgetRoute)
+                },
+                onCostEstimatorClick = {
+                    navController.navigate(AdoptionCostRoute)
                 }
             )
         }
@@ -111,17 +128,58 @@ fun AppNavigation() {
                     navController.popBackStack()
                 },
                 onPetClick = {
-                    val intent = Intent(activity, PetProfileActivity::class.java)
-                    intent.putExtra("PET_ID", it)
-                    activity?.startActivity(intent)
+                    navController.navigate(PetProfileRoute(it))
                 }
             )
+        }
+        composable<AdoptionCostRoute> {
+            AppLayout(topBar = {
+                StyledTopBar(
+                    title = "Adoption Cost",
+                    goBack = { navController.popBackStack() })
+            }) {
+                AndroidFragment<AdoptionCostFragment>()
+            }
+        }
+        composable<MonthlyCareBudgetRoute> {
+            AppLayout(topBar = {
+                StyledTopBar(
+                    title = "Monthly Care Budget",
+                    goBack = { navController.popBackStack() })
+            }) {
+                AndroidFragment<MonthlyCareBudgetFragment>()
+            }
+        }
+        composable<HumanYearConverterRoute> {
+            AppLayout(topBar = {
+                StyledTopBar(
+                    title = "Human Year Converter",
+                    goBack = { navController.popBackStack() })
+            }) {
+                AndroidFragment<HumanYearConverterFragment>()
+            }
+        }
+        composable<FindPerfectPetRoute> {
+            AppLayout(topBar = {
+                StyledTopBar(
+                    title = "Find Perfect Pet",
+                    goBack = { navController.popBackStack() })
+            }) {
+                AndroidFragment<FindPerfectPetFragment>()
+            }
+        }
+        composable<PetProfileRoute> { backStackEntry ->
+            val route = backStackEntry.toRoute<PetProfileRoute>()
+            AppLayout(topBar = {
+                StyledTopBar(
+                    title = "Pet Profile",
+                    goBack = { navController.popBackStack() })
+            }) {
+                AndroidFragment<PetProfileFragment>(
+                    arguments = Bundle().apply { putString("PET_ID", route.petId) }
+                )
+            }
         }
     }
 }
 
-@Serializable
-object ProfileRoute
-
-@Serializable
-object SearchRoute

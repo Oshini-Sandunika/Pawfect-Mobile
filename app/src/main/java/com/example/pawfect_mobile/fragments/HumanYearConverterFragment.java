@@ -1,7 +1,9 @@
-package com.example.pawfect_mobile;
+package com.example.pawfect_mobile.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -10,26 +12,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.example.pawfect_mobile.R;
 
 import java.text.DecimalFormat;
 
-public class HumanYearConverterActivity extends AppCompatActivity {
-
-    private Spinner spinnerPetCategory, spinnerBreedType, spinnerPetSize;
-    private EditText editPetAge;
-
-    private TextView txtBreedLabel, txtSelectedPet, txtHumanAge;
-    private TextView txtLifeStage, txtExplanation, btnBack;
-
-    private Button btnConvert, btnReset;
-
-    private DecimalFormat decimalFormat;
+public class HumanYearConverterFragment extends Fragment {
 
     private final String[] petCategories = {
             "Dog", "Cat", "Rabbit", "Bird", "Fish"
     };
-
     private final String[] dogBreeds = {
             "Labrador Retriever",
             "Golden Retriever",
@@ -41,7 +36,6 @@ public class HumanYearConverterActivity extends AppCompatActivity {
             "Mixed Breed - Medium",
             "Mixed Breed - Large"
     };
-
     private final String[] catBreeds = {
             "Domestic Short Hair",
             "Persian",
@@ -51,7 +45,6 @@ public class HumanYearConverterActivity extends AppCompatActivity {
             "Bengal",
             "Mixed Breed Cat"
     };
-
     private final String[] rabbitTypes = {
             "Netherland Dwarf",
             "Holland Lop",
@@ -60,7 +53,6 @@ public class HumanYearConverterActivity extends AppCompatActivity {
             "Angora Rabbit",
             "Mixed Rabbit"
     };
-
     private final String[] birdTypes = {
             "Budgie",
             "Cockatiel",
@@ -69,7 +61,6 @@ public class HumanYearConverterActivity extends AppCompatActivity {
             "Parrot",
             "Finch"
     };
-
     private final String[] fishTypes = {
             "Goldfish",
             "Betta Fish",
@@ -78,43 +69,51 @@ public class HumanYearConverterActivity extends AppCompatActivity {
             "Cichlid",
             "Tropical Community Fish"
     };
-
     private final String[] petSizes = {
             "Small", "Medium", "Large"
     };
+    private Spinner spinnerPetCategory, spinnerBreedType, spinnerPetSize;
+    private EditText editPetAge;
+    private TextView txtBreedLabel, txtSelectedPet, txtHumanAge;
+    private TextView txtLifeStage, txtExplanation, btnBack;
+    private Button btnConvert, btnReset;
+    private DecimalFormat decimalFormat;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_human_year_converter);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.activity_human_year_converter, container, false);
 
         decimalFormat = new DecimalFormat("#.#");
 
-        initializeViews();
+        initializeViews(view);
         clearButtonTints();
         setupSpinners();
         setupListeners();
 
         updateBreedSpinner("Dog");
         updateDefaultResult();
+
+        return view;
     }
 
-    private void initializeViews() {
-        spinnerPetCategory = findViewById(R.id.spinnerPetCategory);
-        spinnerBreedType = findViewById(R.id.spinnerBreedType);
-        spinnerPetSize = findViewById(R.id.spinnerPetSize);
+    private void initializeViews(View view) {
+        spinnerPetCategory = view.findViewById(R.id.spinnerPetCategory);
+        spinnerBreedType = view.findViewById(R.id.spinnerBreedType);
+        spinnerPetSize = view.findViewById(R.id.spinnerPetSize);
 
-        editPetAge = findViewById(R.id.editPetAge);
+        editPetAge = view.findViewById(R.id.editPetAge);
 
-        txtBreedLabel = findViewById(R.id.txtBreedLabel);
-        txtSelectedPet = findViewById(R.id.txtSelectedPet);
-        txtHumanAge = findViewById(R.id.txtHumanAge);
-        txtLifeStage = findViewById(R.id.txtLifeStage);
-        txtExplanation = findViewById(R.id.txtExplanation);
-        btnBack = findViewById(R.id.btnBack);
+        txtBreedLabel = view.findViewById(R.id.txtBreedLabel);
+        txtSelectedPet = view.findViewById(R.id.txtSelectedPet);
+        txtHumanAge = view.findViewById(R.id.txtHumanAge);
+        txtLifeStage = view.findViewById(R.id.txtLifeStage);
+        txtExplanation = view.findViewById(R.id.txtExplanation);
+        btnBack = view.findViewById(R.id.btnBack);
 
-        btnConvert = findViewById(R.id.btnConvert);
-        btnReset = findViewById(R.id.btnReset);
+        btnConvert = view.findViewById(R.id.btnConvert);
+        btnReset = view.findViewById(R.id.btnReset);
     }
 
     private void clearButtonTints() {
@@ -129,7 +128,7 @@ public class HumanYearConverterActivity extends AppCompatActivity {
 
     private void setSpinnerAdapter(Spinner spinner, String[] data) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this,
+                requireContext(),
                 android.R.layout.simple_spinner_item,
                 data
         );
@@ -138,7 +137,7 @@ public class HumanYearConverterActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
-        btnBack.setOnClickListener(view -> finish());
+        btnBack.setOnClickListener(view -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
 
         spinnerPetCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -242,7 +241,7 @@ public class HumanYearConverterActivity extends AppCompatActivity {
         txtLifeStage.setText("Life Stage: " + lifeStage);
         txtExplanation.setText(explanation);
 
-        Toast.makeText(this, "Age converted successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), "Age converted successfully", Toast.LENGTH_SHORT).show();
     }
 
     private double calculateHumanAge(String category, String breed, String size, double petAge) {

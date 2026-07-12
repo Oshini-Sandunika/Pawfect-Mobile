@@ -1,90 +1,93 @@
-package com.example.pawfect_mobile;
+package com.example.pawfect_mobile.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+
+import com.example.pawfect_mobile.PetRecommendationClassifier;
+import com.example.pawfect_mobile.R;
 
 import java.text.DecimalFormat;
 
-public class FindPerfectPetActivity extends AppCompatActivity {
-
-    private TextView btnBack, txtQuizTitle, txtQuizSubtitle, txtProgress, txtQuestion;
-    private TextView txtPrediction, txtConfidence, txtModelStatus, txtReason;
-    private TextView txtExactPetName, txtExactPetCategory, txtExactPetDesc;
-
-    private Button btnOption1, btnOption2, btnOption3, btnOption4;
-    private Button btnNext, btnPrevious, btnStartAgain;
-
-    private ImageView imgExactPet;
-    private ProgressBar progressBar;
-
-    private CardView questionCard, resultCard;
-
-    private PetRecommendationClassifier classifier;
-    private DecimalFormat decimalFormat;
-
-    private int currentQuestionIndex = 0;
-    private int selectedOptionIndex = -1;
+public class FindPerfectPetFragment extends Fragment {
 
     private final float[] answers = new float[10];
     private final int[] selectedIndexes = new int[10];
-
+    private TextView btnBack, txtQuizTitle, txtQuizSubtitle, txtProgress, txtQuestion;
+    private TextView txtPrediction, txtConfidence, txtModelStatus, txtReason;
+    private TextView txtExactPetName, txtExactPetCategory, txtExactPetDesc;
+    private Button btnOption1, btnOption2, btnOption3, btnOption4;
+    private Button btnNext, btnPrevious, btnStartAgain;
+    private ImageView imgExactPet;
+    private ProgressBar progressBar;
+    private CardView questionCard, resultCard;
+    private PetRecommendationClassifier classifier;
+    private DecimalFormat decimalFormat;
+    private int currentQuestionIndex = 0;
+    private int selectedOptionIndex = -1;
     private Question[] questions;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_perfect_pet);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        classifier = new PetRecommendationClassifier(this);
+        View view = inflater.inflate(R.layout.activity_find_perfect_pet, container, false);
+
+        classifier = new PetRecommendationClassifier(requireContext());
         decimalFormat = new DecimalFormat("#.#");
 
-        initializeViews();
+        initializeViews(view);
         initializeQuestions();
         setupListeners();
         clearButtonTints();
         resetStoredAnswers();
         showQuestion();
+
+        return view;
     }
 
-    private void initializeViews() {
-        btnBack = findViewById(R.id.btnBack);
-        txtQuizTitle = findViewById(R.id.txtQuizTitle);
-        txtQuizSubtitle = findViewById(R.id.txtQuizSubtitle);
-        txtProgress = findViewById(R.id.txtProgress);
-        txtQuestion = findViewById(R.id.txtQuestion);
+    private void initializeViews(View view) {
+        btnBack = view.findViewById(R.id.btnBack);
+        txtQuizTitle = view.findViewById(R.id.txtQuizTitle);
+        txtQuizSubtitle = view.findViewById(R.id.txtQuizSubtitle);
+        txtProgress = view.findViewById(R.id.txtProgress);
+        txtQuestion = view.findViewById(R.id.txtQuestion);
 
-        btnOption1 = findViewById(R.id.btnOption1);
-        btnOption2 = findViewById(R.id.btnOption2);
-        btnOption3 = findViewById(R.id.btnOption3);
-        btnOption4 = findViewById(R.id.btnOption4);
+        btnOption1 = view.findViewById(R.id.btnOption1);
+        btnOption2 = view.findViewById(R.id.btnOption2);
+        btnOption3 = view.findViewById(R.id.btnOption3);
+        btnOption4 = view.findViewById(R.id.btnOption4);
 
-        btnNext = findViewById(R.id.btnNext);
-        btnPrevious = findViewById(R.id.btnPrevious);
-        btnStartAgain = findViewById(R.id.btnStartAgain);
+        btnNext = view.findViewById(R.id.btnNext);
+        btnPrevious = view.findViewById(R.id.btnPrevious);
+        btnStartAgain = view.findViewById(R.id.btnStartAgain);
 
-        progressBar = findViewById(R.id.progressBar);
+        progressBar = view.findViewById(R.id.progressBar);
 
-        questionCard = findViewById(R.id.questionCard);
-        resultCard = findViewById(R.id.resultCard);
+        questionCard = view.findViewById(R.id.questionCard);
+        resultCard = view.findViewById(R.id.resultCard);
 
-        txtPrediction = findViewById(R.id.txtPrediction);
-        txtConfidence = findViewById(R.id.txtConfidence);
-        txtModelStatus = findViewById(R.id.txtModelStatus);
-        txtReason = findViewById(R.id.txtReason);
+        txtPrediction = view.findViewById(R.id.txtPrediction);
+        txtConfidence = view.findViewById(R.id.txtConfidence);
+        txtModelStatus = view.findViewById(R.id.txtModelStatus);
+        txtReason = view.findViewById(R.id.txtReason);
 
-        imgExactPet = findViewById(R.id.imgExactPet);
-        txtExactPetName = findViewById(R.id.txtExactPetName);
-        txtExactPetCategory = findViewById(R.id.txtExactPetCategory);
-        txtExactPetDesc = findViewById(R.id.txtExactPetDesc);
+        imgExactPet = view.findViewById(R.id.imgExactPet);
+        txtExactPetName = view.findViewById(R.id.txtExactPetName);
+        txtExactPetCategory = view.findViewById(R.id.txtExactPetCategory);
+        txtExactPetDesc = view.findViewById(R.id.txtExactPetDesc);
     }
 
     private void clearButtonTints() {
@@ -203,7 +206,7 @@ public class FindPerfectPetActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
-        btnBack.setOnClickListener(v -> finish());
+        btnBack.setOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
 
         btnOption1.setOnClickListener(v -> selectOption(0));
         btnOption2.setOnClickListener(v -> selectOption(1));
@@ -214,7 +217,7 @@ public class FindPerfectPetActivity extends AppCompatActivity {
 
         btnNext.setOnClickListener(v -> {
             if (selectedOptionIndex == -1) {
-                Toast.makeText(this, "Please select an answer", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Please select an answer", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -560,7 +563,7 @@ public class FindPerfectPetActivity extends AppCompatActivity {
         int imageResId = getResources().getIdentifier(
                 pet.imageName,
                 "drawable",
-                getPackageName()
+                requireContext().getPackageName()
         );
 
         if (imageResId == 0) {
@@ -595,7 +598,7 @@ public class FindPerfectPetActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
 
         if (classifier != null) {

@@ -1,4 +1,4 @@
-package com.example.pawfect_mobile;
+package com.example.pawfect_mobile.fragments;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.bumptech.glide.Glide;
+import com.example.pawfect_mobile.R;
 import com.example.pawfect_mobile.data.InquiryService;
 import com.example.pawfect_mobile.data.dto.ShelterInquiryDTO;
 import com.example.pawfect_mobile.data.models.Shelter;

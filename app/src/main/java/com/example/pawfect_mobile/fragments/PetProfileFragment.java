@@ -1,16 +1,21 @@
-package com.example.pawfect_mobile;
+package com.example.pawfect_mobile.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.fragment.app.FragmentActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.pawfect_mobile.R;
 import com.example.pawfect_mobile.data.PetService;
 import com.example.pawfect_mobile.data.dto.ShelterInquiryDTO;
 import com.example.pawfect_mobile.data.models.Pet;
@@ -18,7 +23,7 @@ import com.example.pawfect_mobile.data.models.Shelter;
 
 import java.util.Locale;
 
-public class PetProfileActivity extends FragmentActivity {
+public class PetProfileFragment extends Fragment {
 
     private ImageView petImageView;
     private TextView petNameTextView;
@@ -41,61 +46,62 @@ public class PetProfileActivity extends FragmentActivity {
     // This is the Firebase child key
     private String petId;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pet_profile);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_pet_profile, container, false);
+        initializeViews(view);
 
-        initializeViews();
-
-        petId = getIntent().getStringExtra("PET_ID");
+        if (getArguments() != null) {
+            petId = getArguments().getString("PET_ID");
+        }
 
         if (petId == null || petId.trim().isEmpty()) {
             Toast.makeText(
-                    this,
+                    requireContext(),
                     "Pet ID was not provided",
                     Toast.LENGTH_SHORT
             ).show();
 
-            finish();
-            return;
+            requireActivity().getOnBackPressedDispatcher().onBackPressed();
+            return view;
         }
 
         btnAdoptMe.setEnabled(false);
-
         loadPetData();
-
         btnAdoptMe.setOnClickListener(v -> openAdoptionRequest());
+
+        return view;
     }
 
-    private void initializeViews() {
-        petImageView = findViewById(R.id.petImageView);
-        petNameTextView = findViewById(R.id.petNameTextView);
-        petBreedTextView = findViewById(R.id.petBreedTextView);
-        petAgeTextView = findViewById(R.id.petAgeTextView);
-        petMonthlyCostTextView = findViewById(R.id.petMonthlyCostTextView);
-        petAdoptionFeeTextView = findViewById(R.id.petAdoptionFeeTextView);
-        petDescriptionTextView = findViewById(R.id.petDescriptionTextView);
-        btnAdoptMe = findViewById(R.id.btnAdoptMe);
-        shelterSection = findViewById(R.id.shelterSection);
-        shelterLogoImageView = findViewById(R.id.shelterLogoImageView);
-        shelterNameTextView = findViewById(R.id.shelterNameTextView);
-        shelterAddressTextView = findViewById(R.id.shelterAddressTextView);
-        shelterPhoneTextView = findViewById(R.id.shelterPhoneTextView);
-        shelterEmailTextView = findViewById(R.id.shelterEmailTextView);
+    private void initializeViews(View view) {
+        petImageView = view.findViewById(R.id.petImageView);
+        petNameTextView = view.findViewById(R.id.petNameTextView);
+        petBreedTextView = view.findViewById(R.id.petBreedTextView);
+        petAgeTextView = view.findViewById(R.id.petAgeTextView);
+        petMonthlyCostTextView = view.findViewById(R.id.petMonthlyCostTextView);
+        petAdoptionFeeTextView = view.findViewById(R.id.petAdoptionFeeTextView);
+        petDescriptionTextView = view.findViewById(R.id.petDescriptionTextView);
+        btnAdoptMe = view.findViewById(R.id.btnAdoptMe);
+        shelterSection = view.findViewById(R.id.shelterSection);
+        shelterLogoImageView = view.findViewById(R.id.shelterLogoImageView);
+        shelterNameTextView = view.findViewById(R.id.shelterNameTextView);
+        shelterAddressTextView = view.findViewById(R.id.shelterAddressTextView);
+        shelterPhoneTextView = view.findViewById(R.id.shelterPhoneTextView);
+        shelterEmailTextView = view.findViewById(R.id.shelterEmailTextView);
     }
 
     private void loadPetData() {
         PetService.INSTANCE.getPetByIdCB(petId, pet -> {
-            runOnUiThread(() -> {
+            requireActivity().runOnUiThread(() -> {
                 if (pet == null) {
                     Toast.makeText(
-                            PetProfileActivity.this,
+                            requireContext(),
                             "Pet details were not found",
                             Toast.LENGTH_SHORT
                     ).show();
 
-                    finish();
+                    requireActivity().getOnBackPressedDispatcher().onBackPressed();
                     return;
                 }
 
@@ -189,7 +195,7 @@ public class PetProfileActivity extends FragmentActivity {
     private void openAdoptionRequest() {
         if (currentPet == null || currentPet.getShelter() == null) {
             Toast.makeText(
-                    this,
+                    requireContext(),
                     "Pet data is still loading",
                     Toast.LENGTH_SHORT
             ).show();
@@ -200,7 +206,7 @@ public class PetProfileActivity extends FragmentActivity {
         Shelter s = currentPet.getShelter();
         ShelterInquiryDTO dto = new ShelterInquiryDTO(petId, s);
         AdoptionRequestDialog dialog = AdoptionRequestDialog.newInstance(dto);
-        dialog.show(getSupportFragmentManager(), "ShelterInquiryDialog");
+        dialog.show(getChildFragmentManager(), "ShelterInquiryDialog");
     }
 
     private String getSafeText(String value, String fallback) {

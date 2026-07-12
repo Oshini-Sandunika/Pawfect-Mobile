@@ -21,11 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AdoptionCostActivity" />
-        <activity android:name=".MonthlyCareBudgetActivity" />
-        <activity android:name=".HumanYearConverterActivity" />
-        <activity android:name=".FindPerfectPetActivity" />
-        <activity android:name=".PetProfileActivity" />
+
     </application>
 
 </manifest>
