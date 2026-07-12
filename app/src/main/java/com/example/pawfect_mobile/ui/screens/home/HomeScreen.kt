@@ -11,9 +11,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material.icons.filled.Business
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -28,6 +25,7 @@ import com.example.pawfect_mobile.R
 import com.example.pawfect_mobile.ui.components.ErrorCard
 import com.example.pawfect_mobile.ui.components.LoadingCard
 import com.example.pawfect_mobile.ui.components.PetCard
+import com.example.pawfect_mobile.ui.components.StyledIconButton
 import com.example.pawfect_mobile.ui.layouts.AppLayout
 import com.example.pawfect_mobile.ui.screens.home.components.ActionCard
 import com.example.pawfect_mobile.ui.screens.home.components.HomeTopBar
@@ -52,15 +50,11 @@ fun HomeScreen(
         noInset = true,
         floatingActionButton = {
             if (state.currentUser?.shelterId != null) {
-                FloatingActionButton(
+                StyledIconButton(
                     onClick = onStaffDashboardClick,
-                    containerColor = MaterialTheme.colorScheme.primary
-                ) {
-                    Icon(
-                        imageVector = androidx.compose.material.icons.Icons.Filled.Business,
-                        contentDescription = "Staff Dashboard"
-                    )
-                }
+                    icon = androidx.compose.material.icons.Icons.Filled.Business,
+                    elevation = 24.dp,
+                )
             }
         }
     ) {

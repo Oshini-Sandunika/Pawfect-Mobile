@@ -1,6 +1,6 @@
 package com.example.pawfect_mobile.ui.components
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,10 +17,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -40,7 +40,10 @@ fun PetCard(
     StyledCard(
         modifier = modifier
             .fillMaxWidth()
-            .height(140.dp),
+            .height(140.dp)
+            .pointerInput("pet-card", pet.id) {
+                detectTapGestures(onTap = { onPetClick(pet.id) })
+            },
         shape = RoundedCornerShape(4.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
@@ -77,33 +80,24 @@ fun PetCard(
                     overflow = TextOverflow.Ellipsis
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    if (pet.shelter != null) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                Icons.Filled.LocationOn,
-                                contentDescription = "",
-                                modifier = Modifier.size(16.dp)
-                            )
-                            Text(
-                                text = "${pet.shelter?.name}",
-                                fontSize = 11.sp,
-                                color = MaterialTheme.colorScheme.primary,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                                modifier = Modifier.padding(horizontal = 8.dp)
-                            )
-                        }
-                    }
-                    TextButton({ onPetClick(pet.id) }) {
-                        Text("More Info")
+
+                if (pet.shelter != null) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            Icons.Filled.LocationOn,
+                            contentDescription = "",
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Text(
+                            text = "${pet.shelter?.name}",
+                            fontSize = 11.sp,
+                            color = MaterialTheme.colorScheme.primary,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.padding(horizontal = 8.dp)
+                        )
                     }
                 }
-
             }
         }
     }

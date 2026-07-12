@@ -1,8 +1,5 @@
 package com.example.pawfect_mobile.ui.screens.home.components
 
-import android.content.Intent
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,27 +7,18 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.Calculate
 import androidx.compose.material.icons.twotone.CalendarMonth
 import androidx.compose.material.icons.twotone.Payments
 import androidx.compose.material.icons.twotone.Quiz
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-
 import com.example.pawfect_mobile.ui.components.StyledCard
+import com.example.pawfect_mobile.ui.components.StyledIconButton
 
 @Composable
 fun ActionCard(
@@ -56,59 +44,31 @@ fun ActionCard(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                ToolItem(
+                StyledIconButton(
                     icon = Icons.TwoTone.Quiz,
                     label = "Pet Quiz",
+                    modifier = Modifier.padding(4.dp),
                     onClick = onQuizClick
                 )
-                ToolItem(
+                StyledIconButton(
                     icon = Icons.TwoTone.CalendarMonth,
                     label = "Age Calculator",
+                    modifier = Modifier.padding(4.dp),
                     onClick = onAgeCalculatorClick
                 )
-                ToolItem(
+                StyledIconButton(
                     icon = Icons.TwoTone.Calculate,
                     label = "Budget",
+                    modifier = Modifier.padding(4.dp),
                     onClick = onBudgetClick
                 )
-                ToolItem(
+                StyledIconButton(
                     icon = Icons.TwoTone.Payments,
                     label = "Cost Estimator",
+                    modifier = Modifier.padding(4.dp),
                     onClick = onCostEstimatorClick
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun ToolItem(
-    icon: ImageVector,
-    label: String,
-    onClick: () -> Unit
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .clickable { onClick() }
-            .padding(4.dp)
-    ) {
-        Surface(
-            shape = RoundedCornerShape(16.dp),
-            border = BorderStroke(
-                1.dp,
-                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f)
-            ),
-            modifier = Modifier.size(56.dp)
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = label,
-                tint = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.8f),
-                modifier = Modifier.padding(12.dp)
-            )
-        }
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(text = label, fontSize = 12.sp, fontWeight = FontWeight.Medium)
     }
 }
