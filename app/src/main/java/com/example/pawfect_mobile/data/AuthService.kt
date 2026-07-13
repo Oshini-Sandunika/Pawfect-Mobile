@@ -44,7 +44,6 @@ object AuthService {
         val userId = Firebase.auth.currentUser?.uid
         if (userId != null) {
             val user = User(
-                userId,
                 dto.fullName,
                 phone = dto.phone,
                 createdAt = System.currentTimeMillis()
@@ -61,8 +60,11 @@ object AuthService {
 
     suspend fun updateProfile(fullName: String, phone: String) {
         val user = _currentUserFlow.value ?: return
+        val userId = Firebase.auth.currentUser?.uid!!
+        
         val updatedUser = user.copy(fullName = fullName, phone = phone)
-        Firebase.firestore.collection("users").document(user.userId)
+
+        Firebase.firestore.collection("users").document(userId)
             .set(updatedUser).await()
         _currentUserFlow.value = updatedUser
     }
@@ -72,9 +74,11 @@ object AuthService {
     }
 
     suspend fun deleteAccount() {
-        val user = _currentUserFlow.value ?: return
-        Firebase.firestore.collection("users").document(user.userId).delete().await()
+        val userId = Firebase.auth.currentUser?.uid!!
+
+        Firebase.firestore.collection("users").document(userId).delete().await()
         Firebase.auth.currentUser?.delete()?.await()
+
         _currentUserFlow.value = null
     }
 
