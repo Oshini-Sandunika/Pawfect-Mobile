@@ -1,213 +1,339 @@
-# Pawfect Mobile App
+# 🐾 Pawfect – Smart Pet Adoption and Care Mobile Application
 
-Pawfect Mobile is an Android application developed as the mobile version of the Pawfect pet adoption website. The app helps users find a suitable pet for their lifestyle, browse adoptable pets, submit adoption requests, and estimate pet ownership costs.
+<p align="center">
+  <img src="https://img.shields.io/badge/Platform-Android-green" />
+  <img src="https://img.shields.io/badge/Language-Java%20%7C%20Kotlin-blue" />
+  <img src="https://img.shields.io/badge/Database-Firebase-orange" />
+  <img src="https://img.shields.io/badge/AI-TensorFlow%20Lite-red" />
+</p>
 
-The project is developed using **Android Studio**, **Java**, and **XML**, integrated with **Firebase** for backend services.
+## 📖 Overview
 
----
+**Pawfect** is an AI-powered Android mobile application designed to simplify the pet adoption process while promoting responsible pet ownership.
 
-## Project Overview
-
-Pawfect Mobile provides three main features:
-
-1. **Find Your Perfect Pet**  
-   An AI-based pet recommendation quiz that suggests a suitable pet category and exact breed/type based on the user’s lifestyle.
-
-2. **Browse & Adopt Pets**  
-   Users can browse detailed pet profiles (fetching data dynamically from Firebase) and submit an adoption request form for their chosen pet.
-
-3. **Pet Ownership Tools**  
-   A set of calculators and converters that help users plan adoption and pet care costs.
-
-The app follows a brown and cream Pawfect-themed mobile UI.
+The application connects pet adopters with registered animal shelters, provides intelligent pet recommendations based on users' lifestyles, and includes several pet care tools to assist users before and after adoption.
 
 ---
 
-## Main Features
+# ✨ Features
 
-### Find Your Perfect Pet
+## 👤 User Features
 
-This feature uses a one-question-at-a-time quiz with a progress bar. Users answer lifestyle-based questions, and the app predicts a suitable pet category using a TensorFlow Lite model.
-
-The quiz considers:
-- Living space
-- Activity level
-- Daily time availability
-- Allergy concerns
-- Children at home
-- Monthly budget
-- Grooming tolerance
-- Noise tolerance
-- Pet ownership experience
-- Preferred pet size
-
-Supported pet categories:
-- Dog
-- Cat
-- Rabbit
-- Bird
-- Fish
-
-The app first predicts the main pet category, then recommends one exact breed/type and displays a matching image.
-
-Example:
-```text
-Recommended Category: Dog
-Best Matching Pet: Shih Tzu
-```
-
-### Pet Profiles & Adoption Requests
-
-- **Detailed Pet Profiles:** Displays the pet's name, age, breed, description, estimated monthly cost, and a high-quality image loaded dynamically via Firebase Storage and Glide.
-- **Adoption Form:** A comprehensive form where users can submit their Name, Email, Phone, and Reason for Adoption. The application securely pushes these requests directly into the Firebase Realtime Database.
+- Secure User Registration & Login
+- AI-Powered Pet Recommendation
+- Browse Available Pets
+- Search Pets by
+  - Name
+  - Breed
+  - Species
+- View Detailed Pet Profiles
+- Submit Adoption Inquiries
+- Human Age Calculator
+- Monthly Pet Care Cost Calculator
+- Adoption Cost Estimator
 
 ---
 
-### TensorFlow Lite Recommendation Model
+## 🏠 Shelter Features
 
-The app integrates a TensorFlow Lite model for pet category prediction.
-Since a real questionnaire-response dataset was not available, a synthetic dataset was created for training using lifestyle suitability factors for five pet categories (Dog, Cat, Rabbit, Bird, Fish).
+Shelters have a dedicated dashboard where they can:
 
-If the model file is unavailable, the app can continue using a rule-based fallback recommendation method.
-
-Model file location:
-```text
-app/src/main/assets/pet_recommendation_model.tflite
-```
-
----
-
-## Pet Ownership Tools
-
-The app includes three pet ownership tools.
-
-### Adoption Cost Estimator
-Estimates the initial cost of adopting a pet. Includes variables such as Pet category, Breed/type, Size, Age group, Adoption source, Vaccination, Starter accessories, Microchip, Vet checkup, Grooming, Spay/neuter, Training, and Insurance.
-
-The result shows a cost breakdown and total estimated adoption cost in LKR.
-
-### Monthly Pet Care Cost Calculator
-Estimates the monthly and yearly cost of caring for a pet based on Food quality, Care level, Vet saving plan, Grooming, Toys, Training, Medicine, Cleaning supplies, and Emergency funds.
-
-The result shows monthly and yearly estimated costs in LKR.
-
-### Human Year Converter
-Converts a pet’s age into approximate human years based on species and size.
-
-Supported categories:
-- Dog
-- Cat
-- Rabbit
-- Bird
-- Fish
+- Add New Pets
+- Upload Pet Images
+- Manage Shelter Details
+- View Adoption Inquiries
+- Contact Applicants via Phone or Email
+- Manage Adoption Requests
 
 ---
 
-## Technologies Used
+# 🤖 AI-Powered Pet Recommendation
+
+Pawfect includes an intelligent **Pet Recommendation System** developed using **TensorFlow Lite (LiteRT).**
+
+Users answer a lifestyle questionnaire including:
+
+- Living Space
+- Activity Level
+- Available Time
+- Budget
+- Grooming Preference
+- Allergies
+- Previous Pet Ownership Experience
+
+Based on these responses, the AI predicts the most suitable pet category and recommends an appropriate breed together with a confidence score.
+
+---
+
+# 🛠️ Technologies Used
+
+## Mobile Development
 
 - Android Studio
 - Java
-- XML
-- TensorFlow Lite / LiteRT
-- Firebase Realtime Database
+- Kotlin
+- Jetpack Compose
+
+## Backend
+
+- Firebase Authentication
+- Cloud Firestore
 - Firebase Storage
-- Glide (Image Loading)
-- Android CardView
-- Local drawable assets
+
+## AI
+
+- TensorFlow Lite (LiteRT)
 
 ---
 
-## Main Java Files
+# 📱 Application Modules
 
-```text
-HomeActivity.java
-FindPerfectPetActivity.java
-PetRecommendationClassifier.java
-ToolsActivity.java
-AdoptionCostActivity.java
-MonthlyCareBudgetActivity.java
-HumanYearConverterActivity.java
-PetProfileActivity.java
-AdoptionRequestActivity.java
-Pet.java
-AdoptionRequest.java
-```
+### Authentication
 
----
+- Login
+- Registration
+- Forgot Password
 
-## Main Layout Files
+### AI Recommendation
 
-```text
-activity_home.xml
-activity_find_perfect_pet.xml
-activity_tools.xml
-activity_adoption_cost.xml
-activity_monthly_budget.xml
-activity_human_year_converter.xml
-activity_pet_profile.xml
-activity_adoption_request.xml
-```
+- Lifestyle Questionnaire
+- AI Prediction
+- Breed Recommendation
 
----
+### Pet Management
 
-## Assets
+- Browse Pets
+- Search Pets
+- Pet Profile
 
-Main assets used in the app:
-- Pawfect logo
-- Transparent paw pattern background
-- Recommended pet breed/type images
-- TensorFlow Lite model file
+### Adoption
 
-Paw pattern background location:
-```text
-app/src/main/res/drawable-nodpi/paw_pattern.png
-```
+- Adoption Inquiry
 
----
+### Shelter Management
 
-## How to Run
+- Shelter Dashboard
+- Add Pets
+- Manage Shelter Details
+- Inquiry Management
 
-1. Open the project in Android Studio.
-2. Wait for Gradle sync to finish.
-3. Place your Firebase `google-services.json` file inside the `app/` directory.
-4. Make sure the TensorFlow Lite model is placed in:
-```text
-app/src/main/assets/pet_recommendation_model.tflite
-```
-5. Make sure required images are added to the drawable folders.
-6. Run the app on an emulator or Android device.
+### Pet Care Tools
 
----
-
-## Current Status
-
-The app currently includes:
-- Home screen
-- AI pet recommendation quiz
-- TensorFlow Lite model integration
-- Exact pet breed/type recommendation
-- Pet image display
-- Pet Ownership Tools screen
+- Human Age Calculator
+- Monthly Care Cost Calculator
 - Adoption Cost Estimator
-- Monthly Pet Care Cost Calculator
-- Human Year Converter
-- Pet Profiles (Dynamic from Firebase)
-- Adoption Request submission
-- Pawfect-themed mobile UI
 
 ---
 
-## Future Enhancements
+# 📂 Project Structure
 
-- Save user quiz history
-- Improve the model using real user data
-- Add user accounts and favourites
-- Connect recommended pet directly to cost calculators
-- Add robust Adoptable Pet Listing Screen with Filters
+```
+Pawfect-Mobile
+│
+├── app
+│
+├── data
+│   ├── models
+│   ├── dto
+│   ├── AuthService
+│   ├── PetService
+│   ├── ShelterService
+│   ├── StorageService
+│   └── UserService
+│
+├── ui
+│   ├── screens
+│   ├── components
+│   ├── layouts
+│   └── navigation
+│
+└── tensorflow
+```
 
 ---
 
-## Authors
+# 🔥 Firebase Services Used
 
-**O. S. Mihindukulasuriya** | FC213037  
-**R. M. V. S. Rathnayake** | FC213007
+- Firebase Authentication
+- Cloud Firestore
+- Firebase Storage
+
+---
+
+# 📸 Screens
+
+- Login
+- Registration
+- Home
+- AI Recommendation
+- Search
+- Pet Profile
+- Adoption Inquiry
+- Shelter Dashboard
+- Add Pet
+- Shelter Details
+- Inquiry Management
+- Human Age Calculator
+- Monthly Cost Calculator
+- Adoption Cost Estimator
+
+---
+
+# 🚀 Getting Started
+
+## Prerequisites
+
+Install:
+
+- Android Studio (Latest Version)
+- Java JDK 17+
+- Android SDK
+- Git
+
+---
+
+# Clone the Repository
+
+```bash
+git clone https://github.com/Oshini-Sandunika/Pawfect-Mobile.git
+```
+
+Go to the project folder
+
+```bash
+cd Pawfect-Mobile
+```
+
+Open the project using **Android Studio**.
+
+---
+
+# Firebase Setup
+
+This project **does not include** the `google-services.json` file for security reasons.
+
+Create your own Firebase project.
+
+Enable:
+
+- Firebase Authentication
+- Cloud Firestore
+- Firebase Storage
+
+Download the **google-services.json** file and place it inside:
+
+```
+app/google-services.json
+```
+
+---
+
+# Configure Firebase
+
+Create the following Firestore collections:
+
+```
+users
+pets
+shelters
+inquiries
+```
+
+Configure Firebase Storage for:
+
+```
+pet_images/
+shelter/
+```
+
+---
+
+# Run the Application
+
+Sync Gradle.
+
+Build the project.
+
+Run on:
+
+- Android Emulator
+
+or
+
+- Physical Android Device
+
+---
+
+# 🤝 Contributing
+
+1. Fork the repository
+
+2. Clone your fork
+
+```bash
+git clone https://github.com/YOUR_USERNAME/Pawfect-Mobile.git
+```
+
+3. Create a branch
+
+```bash
+git checkout -b feature-name
+```
+
+4. Commit your changes
+
+```bash
+git add .
+
+git commit -m "Added new feature"
+```
+
+5. Push
+
+```bash
+git push origin feature-name
+```
+
+6. Open a Pull Request
+
+---
+
+# 📹 Demonstration Video
+
+https://youtu.be/zLWejjjApfg
+
+> **Best viewed in full-screen mode.**
+
+---
+
+# 📂 GitHub Repository
+
+https://github.com/Oshini-Sandunika/Pawfect-Mobile
+
+---
+
+# 👨‍💻 Team Members
+
+## Group 25
+
+| Name | Index No | Registration No |
+|-------|-----------|-----------------|
+| R. M. V. S. Rathnayake | FC213007 | 110619 |
+| J. I. Y. D. Jayasundara | FC213035 | 110662 |
+| O. S. Mihindukulasuriya | FC213037 | 110871 |
+
+---
+
+# 📄 License
+
+This project was developed for academic purposes as part of the **CIS4212 – Mobile Computing** module.
+
+---
+
+# ❤️ Thank You
+
+> **Choosing a pet is more than finding one you love—it's about finding the one that's right for you.**
+
+## 🐾 Pawfect
+
+**Making pet adoption smarter, simpler, and more responsible.**
