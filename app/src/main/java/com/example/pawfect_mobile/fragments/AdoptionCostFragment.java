@@ -153,10 +153,10 @@ public class AdoptionCostFragment extends Fragment {
     private void setSpinnerAdapter(Spinner spinner, String[] data) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 requireContext(),
-                android.R.layout.simple_spinner_item,
+                R.layout.custom_spinner_item,
                 data
         );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
 
