@@ -49,7 +49,7 @@ fun HomeScreen(
     AppLayout(
         noInset = true,
         floatingActionButton = {
-            if (state.currentUser?.shelterId != null) {
+            if (!state.currentUser?.shelterId.isNullOrBlank()) {
                 StyledIconButton(
                     onClick = onStaffDashboardClick,
                     icon = androidx.compose.material.icons.Icons.Filled.Business,

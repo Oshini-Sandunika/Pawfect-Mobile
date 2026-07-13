@@ -43,7 +43,12 @@ object AuthService {
         Firebase.auth.createUserWithEmailAndPassword(dto.email, dto.password).await()
         val userId = Firebase.auth.currentUser?.uid
         if (userId != null) {
-            val user = User(userId, dto.fullName, dto.email, dto.phone, createdAt = System.currentTimeMillis())
+            val user = User(
+                userId,
+                dto.fullName,
+                phone = dto.phone,
+                createdAt = System.currentTimeMillis()
+            )
             Firebase.firestore.collection("users").document(userId)
                 .set(user).await()
             _currentUserFlow.value = user
