@@ -19,9 +19,12 @@ class SearchViewModel : ViewModel() {
 
     private var searchJob: Job? = null
 
+    fun initialize() {
+        onTypeSelected("All")
+    }
 
     fun onQueryChange(query: String) {
-        _state.update { it.copy(query = query, isLoading = true, hasSearched = true) }
+        _state.update { it.copy(query = query, isLoading = true) }
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             delay(500.milliseconds) // debounce
@@ -31,25 +34,15 @@ class SearchViewModel : ViewModel() {
 
     fun onTypeSelected(type: String) {
         _state.update { it.copy(selectedType = type) }
-        performSearch()
+        searchJob = viewModelScope.launch {
+            delay(500.milliseconds) // debounce
+            performSearch()
+        }
     }
 
     private fun performSearch() {
-        val currentState = _state.value
-        if (currentState.query.isBlank()) {
-            _state.update {
-                it.copy(
-                    hasSearched = false,
-                    results = emptyList(),
-                    error = null,
-                    isLoading = false
-                )
-            }
-            return
-        }
-
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true, error = null, hasSearched = true) }
+            _state.update { it.copy(isLoading = true, error = null) }
             try {
                 val currentState = _state.value
                 val results = PetService.searchPets(currentState.query, currentState.selectedType)

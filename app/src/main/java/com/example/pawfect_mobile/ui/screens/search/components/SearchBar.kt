@@ -34,7 +34,7 @@ fun SearchBar(
     onTypeSelected: (String) -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
-    val types = listOf("All", "Dog", "Cat", "Bird", "Rabbit")
+    val types = listOf("All", "Dog", "Cat", "Bird", "Rabbit", "Fish", "Other")
 
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()

@@ -65,6 +65,14 @@ object PetService {
                 .whereEqualTo("species", type)
                 .get()
                 .await()
+        } else if (type == "Other") {
+            Firebase.firestore.collection("pets")
+                .whereNotIn(
+                    "species",
+                    mutableListOf("Dog", "Cat", "Bird", "Rabbit", "Fish")
+                )
+                .get()
+                .await()
         } else {
             Firebase.firestore.collection("pets")
                 .get()
