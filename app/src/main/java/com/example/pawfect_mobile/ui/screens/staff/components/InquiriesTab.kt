@@ -91,7 +91,10 @@ fun InquiriesTab(inquiries: List<Inquiry>) {
                     HorizontalDivider()
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    val userName = inquiry.user?.fullName ?: "Unknown User"
+                    var userName = inquiry.username
+                    if (userName.isBlank()) {
+                        userName = "Unknown User"
+                    }
                     Text(
                         text = "From: $userName",
                         style = MaterialTheme.typography.bodyMedium,
@@ -134,26 +137,24 @@ fun InquiriesTab(inquiries: List<Inquiry>) {
                             Text("Email")
                         }
 
-                        inquiry.user?.phone?.let { phone ->
-                            Button(
-                                enabled = phone.isNotBlank(),
-                                shape = RoundedCornerShape(6.dp),
-                                onClick = {
-                                    val intent = Intent(Intent.ACTION_DIAL).apply {
-                                        data = "tel:$phone".toUri()
-                                    }
-                                    context.startActivity(intent)
-                                },
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Icon(
-                                    Icons.Default.Phone,
-                                    contentDescription = "Call",
-                                    modifier = Modifier.size(16.dp)
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Text("Call")
-                            }
+                        Button(
+                            enabled = inquiry.phone.isNotBlank(),
+                            shape = RoundedCornerShape(6.dp),
+                            onClick = {
+                                val intent = Intent(Intent.ACTION_DIAL).apply {
+                                    data = "tel:${inquiry.phone}".toUri()
+                                }
+                                context.startActivity(intent)
+                            },
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Icon(
+                                Icons.Default.Phone,
+                                contentDescription = "Call",
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Call")
                         }
                     }
                 }

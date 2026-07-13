@@ -2,7 +2,6 @@ package com.example.pawfect_mobile.data
 
 import com.example.pawfect_mobile.data.models.Inquiry
 import com.example.pawfect_mobile.data.models.Pet
-import com.example.pawfect_mobile.data.models.User
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,13 +18,17 @@ object InquiryService {
     ) {
         val uid = FirebaseAuth.getInstance().currentUser?.uid!!
         val email = FirebaseAuth.getInstance().currentUser?.email!!
+        val username = FirebaseAuth.getInstance().currentUser?.displayName!!
+        val phone = FirebaseAuth.getInstance().currentUser?.phoneNumber!!
 
         val inquiry = Inquiry(
             petId = petId,
             shelterId = shelterId,
             userId = uid,
             message = message,
+            username = username,
             email = email,
+            phone = phone,
             timestamp = System.currentTimeMillis()
         )
 
@@ -46,7 +49,6 @@ object InquiryService {
             .await()
 
         val petCache = mutableMapOf<String, Pet?>()
-        val userCache = mutableMapOf<String, User?>()
 
         return snapshot.documents.mapNotNull {
             val inquiry = it.toObject(Inquiry::class.java)
@@ -59,17 +61,6 @@ object InquiryService {
                     pet
                 }
                 inquiry.pet = pet
-            }
-
-            if (inquiry !== null) {
-                val user = if (petCache.contains(inquiry.userId)) {
-                    userCache[inquiry.userId]
-                } else {
-                    val user = UserService.getUserById(inquiry.userId)
-                    userCache[inquiry.userId] = user
-                    user
-                }
-                inquiry.user = user
             }
 
             return@mapNotNull inquiry
