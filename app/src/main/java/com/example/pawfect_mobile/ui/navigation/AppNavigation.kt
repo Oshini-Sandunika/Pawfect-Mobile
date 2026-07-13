@@ -165,12 +165,15 @@ fun AppNavigation() {
             }
         }
         composable<FindPerfectPetRoute> {
-            AppLayout(topBar = {
-                StyledTopBar(
-                    title = "Find Perfect Pet",
-                    goBack = { navController.popBackStack() })
-            }) {
-                AndroidFragment<FindPerfectPetFragment>()
+            AppLayout(
+                noScroll = true,
+                noInset = true,
+                topBar = {
+                    StyledTopBar(
+                        title = "Find Perfect Pet",
+                        goBack = { navController.popBackStack() })
+                }) {
+                AndroidFragment<FindPerfectPetFragment>(modifier = Modifier.fillMaxSize())
             }
         }
         composable<PetProfileRoute> { backStackEntry ->
